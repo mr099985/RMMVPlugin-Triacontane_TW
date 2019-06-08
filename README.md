@@ -7,32 +7,32 @@ Twitter [@m03271996](https://twitter.com/m03271996)<br>
 Facebook [@reirisgame](https://www.facebook.com/reirisgame/)<br>
 Website [@ReIris](https://m03271996.wixsite.com/reirisgame)<br>
 * * *
-## 標題畫面 <br>
+## Title 標題畫面 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
 | TitleNewGameOnly.js       | [僅有開始遊戲插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Title/TitleNewGameOnly.js)    |
 | AnotherNewGame.js       | [添加新遊戲選項插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Title/AnotherNewGame.js)    |
 | NewGameSe.js       | [開始遊戲專用音效插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Title/NewGameSe.js)    |
 | TitleImageChange.js       | [標題畫面變更插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Title/TitleImageChange.js)    |
-## 戰鬥技能 <br>
+## Battle 戰鬥技能 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
-## 地圖演出 <br>
+## Map 地圖演出 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
-## 音效音樂 <br>
+## Audio 音效音樂 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
-## 環境設置 <br>
+## Option 環境設置 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
-## 文字訊息 <br>
+## Message 文字訊息 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
-## 滑鼠擴展 <br>
+## Mouse 滑鼠擴展 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
-## 獨立系統 <br>
+## System 獨立系統 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
 
