@@ -7,12 +7,10 @@ Twitter [@m03271996](https://twitter.com/m03271996)<br>
 Facebook [@reirisgame](https://www.facebook.com/reirisgame/)<br>
 Website [@ReIris](https://m03271996.wixsite.com/reirisgame)<br>
 * * *
-標題畫面<br>
-* * *
+##標題畫面##<br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
-文字訊息<br>
-* * *
+##文字訊息##<br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
 | DTextPicture.js       | [動態文字圖片生成插件](https://github.com/mr099985/RMMVPlugin-Triacontane/blob/master/DTextPicture.js)    |
