@@ -16,24 +16,24 @@
 =============================================================================*/
 
 /*:
- * @plugindesc 開始遊戲專用 SE 插件
+ * @plugindesc 開始遊戲專用音效插件
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param soundEffect
- * @text 開始遊戲 SE
- * @desc 開始遊戲選擇的 SE 設定。
+ * @text 開始遊戲音效
+ * @desc 開始遊戲選擇的音效設定。
  * @default
  * @type struct<AudioSe>
  *
  * @param includeContinue
  * @text 包含讀取、設置
- * @desc 選擇讀取，設置時也演奏專用 SE 。
+ * @desc 選擇讀取，設置時也演奏專用音效。
  * @default false
  * @type boolean
  *
  * @help NewGameSe.js
  *
- * 選擇開始遊戲時播放專用 SE 。
+ * 選擇開始遊戲時播放專用音效。
  *
  * 這個插件沒有插件命令。
  *
