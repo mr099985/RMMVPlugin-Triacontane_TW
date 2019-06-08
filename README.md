@@ -10,9 +10,9 @@ Website [@ReIris](https://m03271996.wixsite.com/reirisgame)<br>
 ## 標題畫面 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
-| TitleNewGameOnly.js       | [僅有開始遊戲插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/%E6%A8%99%E9%A1%8C%E7%95%AB%E9%9D%A2/TitleNewGameOnly.js)    |
-| AnotherNewGame.js       | [添加新遊戲選項插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/%E6%A8%99%E9%A1%8C%E7%95%AB%E9%9D%A2/AnotherNewGame.js)    |
-| NewGameSe.js       | [開始遊戲專用音效插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/%E6%A8%99%E9%A1%8C%E7%95%AB%E9%9D%A2/NewGameSe.js)    |
+| TitleNewGameOnly.js       | [僅有開始遊戲插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Title/TitleNewGameOnly.js)    |
+| AnotherNewGame.js       | [添加新遊戲選項插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Title/AnotherNewGame.js)    |
+| NewGameSe.js       | [開始遊戲專用音效插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Title/NewGameSe.js)    |
 | TitleImageChange.js       | [標題畫面變更插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Title/TitleImageChange.js)    |
 ## 戰鬥技能 <br>
 | 插件名稱               | 中文名稱              |
