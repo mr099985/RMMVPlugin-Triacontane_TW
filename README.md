@@ -25,6 +25,7 @@ Website [@ReIris](https://m03271996.wixsite.com/reirisgame)<br>
 | --------------------- | --------------------- |
 | BalloonPlaySe.js       | [氣泡圖標播放音效插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Audio/BalloonPlaySe.js)    |
 | ParallelBgs.js      | [BGS 並行播放插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Audio/ParallelBgs.js)    |
+| SimpleVoice.js      | [簡單語音插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Audio/SimpleVoice.js)    |
 ## Menu 選單擴展 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
