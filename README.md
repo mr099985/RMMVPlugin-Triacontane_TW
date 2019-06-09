@@ -23,6 +23,7 @@ Website [@ReIris](https://m03271996.wixsite.com/reirisgame)<br>
 ## Audio 音效音樂 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
+| BalloonPlaySe.js       | [氣泡圖標播放音效插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Audio/BalloonPlaySe.js)    |
 ## Menu 選單擴展 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
