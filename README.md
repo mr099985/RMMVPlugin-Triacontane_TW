@@ -34,6 +34,7 @@ Website [@ReIris](https://m03271996.wixsite.com/reirisgame)<br>
 ## Option 環境設置 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
+| CustomizeConfigDefault.js      | [設置預設值設定插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Option/CustomizeConfigDefault.js)    |
 ## Message 文字訊息 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
