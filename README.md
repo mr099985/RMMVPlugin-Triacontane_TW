@@ -36,6 +36,7 @@ Website [@ReIris](https://m03271996.wixsite.com/reirisgame)<br>
 | --------------------- | --------------------- |
 | CustomizeConfigDefault.js      | [設置預設值設定插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Option/CustomizeConfigDefault.js)    |
 | CustomizeConfigItem.js      | [設置畫面追加任意項目插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Option/CustomizeConfigItem.js)    |
+| MasterVolumeOption.js      | [主音量插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Option/MasterVolumeOption.js)    |
 ## Message 文字訊息 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
