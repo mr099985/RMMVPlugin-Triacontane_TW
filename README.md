@@ -22,6 +22,7 @@ Website [@ReIris](https://m03271996.wixsite.com/reirisgame)<br>
 ## Map 地圖演出 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
+| HorizontalScrollingMove.js       | [橫向卷軸移動插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Map/HorizontalScrollingMove.js)    |
 ## Audio 音效音樂 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
