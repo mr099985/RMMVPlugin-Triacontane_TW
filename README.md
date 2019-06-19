@@ -41,6 +41,7 @@ Website [@ReIris](https://m03271996.wixsite.com/reirisgame)<br>
 ## Message 文字訊息 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
+| ChoiceWindowInMessage.js | [選項於訊息窗口內部插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Message/ChoiceWindowInMessage.js)    |
 ## Mouse 滑鼠擴展 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
