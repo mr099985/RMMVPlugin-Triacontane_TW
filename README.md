@@ -49,6 +49,7 @@ Website [@ReIris](https://m03271996.wixsite.com/reirisgame)<br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
 | NobleMushroom.js      | [視覺小說集合插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/System/NobleMushroom.js)    |
+| SceneNumberInput.js      | [輸入數值畫面插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/System/SceneNumberInput.js)    |
 
 
 [回到頂部](#readme)
