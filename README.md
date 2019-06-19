@@ -45,6 +45,7 @@ Website [@ReIris](https://m03271996.wixsite.com/reirisgame)<br>
 | MessageCommon.js | [訊息公共事件呼叫插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Message/MessageCommon.js)    |
 | MessageFontChange.js | [更改訊息字體插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Message/MessageFontChange.js)    |
 | MessageSkip.js | [訊息播放快進插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Message/MessageSkip.js)    |
+| MessageSpeedCustomize.js | [訊息速度調整插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Message/MessageSpeedCustomize.js)    |
 ## Mouse 滑鼠擴展 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
