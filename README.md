@@ -48,6 +48,7 @@ Website [@ReIris](https://m03271996.wixsite.com/reirisgame)<br>
 | MessageSpeedCustomize.js | [訊息速度調整插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Message/MessageSpeedCustomize.js)    |
 | MessageTriggerSe.js | [訊息播放SE插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Message/MessageTriggerSe.js)    |
 | MessageWindowHidden.js | [一時關閉訊息框插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Message/MessageWindowHidden.js)    |
+| MessageWindowPopup.js | [氣泡呼出窗口插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Message/MessageWindowPopup.js)    |
 ## Mouse 滑鼠擴展 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
