@@ -46,6 +46,7 @@ Website [@ReIris](https://m03271996.wixsite.com/reirisgame)<br>
 | --------------------- | --------------------- |
 | MouseWheelExtend.js      | [滑鼠滾輪擴展插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Mouse/MouseWheelExtend.js)    |
 | ChangeMapTouchPolicy.js      | [觸碰映射模式更改插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Mouse/ChangeMapTouchPolicy.js)    |
+| ChangeWindowTouchPolicy.js      | [窗口觸碰模式變更插件(https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Mouse/ChangeWindowTouchPolicy.js)    |
 ## System 獨立系統 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
