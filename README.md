@@ -32,6 +32,8 @@ Website [@ReIris](https://m03271996.wixsite.com/reirisgame)<br>
 ## Menu 選單擴展 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
+| AdditionalDescription.js      | [幫助說明追加插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Menu/AdditionalDescription.js)    |
+| DescriptionExtend.js      | [說明擴張插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Menu/DescriptionExtend.js)    |
 ## Option 環境設置 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
