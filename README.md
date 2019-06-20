@@ -38,6 +38,10 @@ Website [@ReIris](https://m03271996.wixsite.com/reirisgame)<br>
 | ItemNameEscape.js      | [項目名稱擴張控制字元使用插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Menu/ItemNameEscape.js)    |
 | HiddenParameter.js      | [隱藏參數插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Menu/HiddenParameter.js)    |
 | CustomizeMaxSaveFile.js      | [最大存檔數量變更插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Menu/CustomizeMaxSaveFile.js)    |
+| CommandIcon.js      | [項目追加圖標插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Menu/CommandIcon.js)    |
+| BetweenCharacters.js      | [文字間距插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Menu/BetweenCharacters.js)    |
+| SaveFileDrawFace.js      | [存檔描繪臉圖插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Menu/SaveFileDrawFace.js)    |
+| TimeStopInMenu.js      | [選單停止計算遊玩時間插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Menu/TimeStopInMenu.js)    |
 ## Option 環境設置 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
