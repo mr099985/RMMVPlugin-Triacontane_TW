@@ -74,6 +74,7 @@ Website [@ReIris](https://m03271996.wixsite.com/reirisgame)<br>
 | --------------------- | --------------------- |
 | NobleMushroom.js      | [視覺小說集合插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/System/NobleMushroom.js)    |
 | SceneNumberInput.js      | [輸入數值畫面插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/System/SceneNumberInput.js)    |
+| Chronus.js      | [遊戲內導入時間插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/System/Chronus.js)    |
 
 
 [回到頂部](#readme)
