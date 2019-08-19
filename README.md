@@ -45,6 +45,7 @@ Website [@ReIris](https://m03271996.wixsite.com/reirisgame)<br>
 | UseOnlyOneSave.js      | [單一存檔插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Menu/UseOnlyOneSave.js)    |
 | WindowBlinkStop.js      | [停止窗口選擇閃爍插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Menu/WindowBlinkStop.js)    |
 | NumberInputCancelable.js     | [取消輸入數值功能插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Menu/NumberInputCancelable.js)    |
+| MenuSubCommand.js    | [選單畫面的子命令插件](https://github.com/mr099985/RMMVPlugin-Triacontane_TW/blob/master/Menu/MenuSubCommand.js)    |
 ## Option 環境設置 <br>
 | 插件名稱               | 中文名稱              |
 | --------------------- | --------------------- |
