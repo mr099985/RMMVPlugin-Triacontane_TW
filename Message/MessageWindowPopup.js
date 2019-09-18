@@ -7,6 +7,15 @@
 // http://opensource.org/licenses/mit-license.php
 // ----------------------------------------------------------------------------
 // Version
+// 2.14.5 2019/07/21 YEP_MessageCore.jsでネームボックスを表示する際、特定の条件下で一瞬だけネームボックスが不正な位置に表示される問題を修正
+// 2.14.4 2019/06/23 フキダシウィンドウを無効化したときのX座標の値をデフォルトのコアスクリプトの動作に準拠するよう修正
+// 2.14.3 2019/06/18 MKR_MessageWindowCustom.jsとの連携で、フキダシウィンドウ有効時はフキダシの横幅と高さを優先するよう変更
+// 2.14.2 2019/06/16 FTKR_ExMessageWindow2.jsおよびPauseSignToTextEnd.jsとの連携で、フキダシウィンドウ表示時にポーズサインがはみ出してしまう競合を修正
+// 2.14.1 2019/06/16 2.14.0で追加したテール画像がフキダシウィンドウ無効のときも表示されていた問題を修正
+// 2.14.0 2019/06/10 テール画像を別途指定できる機能を追加
+// 2.13.0 2019/05/26 PauseSignToTextEnd.jsと完全に組み合わせて使用できるよう修正
+// 2.12.2 2019/04/14 フキダシウィンドウをキャラクター下に表示した際、Y座標の位置調整が効かなくなる問題を修正
+// 2.12.1 2019/02/07 GraphicalDesignMode.jsと併用し、かつフキダシウィンドウ無効時、カスタマイズしたウィンドウの横幅が反映されるよう修正
 // 2.12.0 2019/10/21 フキダシウィンドウの表示位置の上限と下限を設定できる機能を追加
 //                   フキダシウィンドウを画面上の任意の位置に表示できる機能を追加
 // 2.11.2 2018/11/26 ポップアップ用のウィンドウスキン設定後、ポップアップを解除してもスキンがそのままになってしまう場合がある問題を修正
@@ -86,7 +95,7 @@
 // [GitHub] : https://github.com/triacontane/
 //=============================================================================
 /*:
- * @plugindesc 氣泡呼出窗口插件
+ * @plugindesc 氣泡式對話窗口 [ ver.2.14.5 ]
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param FontSize
@@ -172,8 +181,9 @@
  * @type number
  *
  * @param NoUseTail
- * @text 禁用暫停圖示顯示結尾
- * @desc 禁用暫停圖示的顯示訊息結尾功能。顯示在預設位置。
+ * @text 禁用暫停圖示顯示
+ * @desc 禁用暫停圖示的顯示。
+ * 未禁用則顯示在預設位置。
  * @default false
  * @type boolean
  *
@@ -213,6 +223,22 @@
  * @default 0
  * @type number
  *
+ * @param tailImage
+ * @text 暫停圖示圖片
+ * @desc 指定暫停圖示使用的系統圖片。
+ * @default
+ * @require 1
+ * @dir img/system/
+ * @type file
+ *
+ * @param tailImageAdjustY
+ * @text 暫停圖示 Y 座標
+ * @desc 暫停圖示使用的 Y 座標補正值。
+ * @default 0
+ * @type number
+ * @min -2000
+ * @max 2000
+ *
  * @help 訊息窗口變更為氣泡呼出窗口，並顯示於指定角色上方。
  *
  * 與 YEP_MessageCore.js 併用的情況，
@@ -221,12 +247,10 @@
  * 另外，併用 FTKR_ExMessageWindow2.js 的複數窗口表示，
  * 此插件配置 FTKR_ExMessageWindow2.js 在下方。
  *
- *
  * 插件參數[AutoPopup]
  * 與 FTKR_ExMessageWindow2.js 併用的情況。
  * 用於自動設置的消息窗口是窗口ID 0。
  * 當它為OFF時，窗口ID 0 返回到一般顯示方法。
- *
  *
  * 詳細插件命令
  *  從事件命令中使用「插件命令」執行。
@@ -427,6 +451,8 @@
     var paramUpperLimitX         = getParamNumber(['upperLimitX']);
     var paramLowerLimitY         = getParamNumber(['lowerLimitY']);
     var paramUpperLimitY         = getParamNumber(['upperLimitY']);
+    var paramTailImage           = getParamString(['tailImage']);
+    var paramTailImageAdjustY    = getParamNumber(['tailImageAdjustY']);
 
     //=============================================================================
     // Game_Interpreter
@@ -624,8 +650,8 @@
     };
 
     Game_System.prototype.setMessagePopupFree = function(x, y) {
-        this._messagePopupFreeX = x;
-        this._messagePopupFreeY = y;
+        this._messagePopupFreeX       = x;
+        this._messagePopupFreeY       = y;
         this._messagePopupCharacterId = 1;
     };
 
@@ -840,6 +866,19 @@
         this._pauseSignToTail = true;
     };
 
+    Window_Base.prototype.setPauseSignImageToTail = function(lowerFlg) {
+        this._windowPauseSignSprite.visible = false;
+        if (lowerFlg) {
+            this._messageTailImage.rotation = 180 * Math.PI / 180;
+            this._messageTailImage.y        = -paramTailImageAdjustY;
+            this._messageTailImage.anchor.y = 0;
+        } else {
+            this._messageTailImage.rotation = 0;
+            this._messageTailImage.y        = this.height + paramTailImageAdjustY;
+            this._messageTailImage.anchor.y = 0;
+        }
+    };
+
     Window_Base.prototype.setPauseSignToNormal = function() {
         this._windowPauseSignSprite.rotation = 0;
         this._windowPauseSignSprite.anchor.y = 1.0;
@@ -859,7 +898,7 @@
 
     Window_Base.prototype.setPopupPosition = function(character) {
         this._popupCharacter = character;
-        this._popupFreePos = $gameSystem.getMessagePopupFree();
+        this._popupFreePos   = $gameSystem.getMessagePopupFree();
         this.setPopupBasePosition();
         this.setPopupLowerPosition();
         this.setPopupAdjustInnerScreen();
@@ -895,16 +934,20 @@
         var position = Math.sin(this._shakeCount / 10 * speed) * this._shakePower;
         this.x += position;
         this._windowPauseSignSprite.x -= position;
+        this._messageTailImage.x -= position;
         this._shakeCount++;
     };
 
     Window_Base.prototype.setPopupLowerPosition = function() {
         var lowerFlg = this.isPopupLower();
         if (lowerFlg) {
-            this.y = this.getPopupBaseY() + 8;
+            this.y += this.height + this.getHeightForPopup() + 8;
         }
-        if (!paramNoUseTail) {
+        if (!paramNoUseTail && !this.isUsePauseSignTextEnd()) {
             this.setPauseSignToTail(lowerFlg);
+        }
+        if (paramTailImage) {
+            this.setPauseSignImageToTail(lowerFlg);
         }
     };
 
@@ -912,8 +955,12 @@
         if (paramInnerScreen) {
             this.adjustPopupPositionY();
         }
-        var adjustResultX             = this.adjustPopupPositionX();
-        this._windowPauseSignSprite.x = this._width / 2 + adjustResultX;
+        var adjustResultX = this.adjustPopupPositionX();
+        var tailX = this._width / 2 + adjustResultX;
+        if (!this.isUsePauseSignTextEnd()) {
+            this._windowPauseSignSprite.x = tailX
+        }
+        this._messageTailImage.x = tailX;
     };
 
     Window_Base.prototype.setWindowShake = function(power) {
@@ -1020,12 +1067,28 @@
         return this.isPopup() && paramFontSizeRange > 0;
     };
 
+    Window_Base.prototype.isUsePauseSignTextEnd = function() {
+        return this.isValidPauseSignTextEnd && this.isValidPauseSignTextEnd()
+    };
+
     //=============================================================================
     // Window_Message
     //  ポップアップする場合、表示内容により座標とサイズを自動設定します。
     //=============================================================================
     Window_Message._faceHeight = Math.floor(Window_Base._faceHeight * paramFaceScale / 100);
     Window_Message._faceWidth  = Math.floor(Window_Base._faceWidth * paramFaceScale / 100);
+
+    var _Window_Message__createAllParts = Window_Message.prototype._createAllParts;
+    Window_Message.prototype._createAllParts = function() {
+        _Window_Message__createAllParts.apply(this, arguments);
+        this._messageTailImage = new Sprite();
+        if (paramTailImage) {
+            this._messageTailImage.bitmap   = ImageManager.loadSystem(paramTailImage);
+            this._messageTailImage.visible  = false;
+            this._messageTailImage.anchor.x = 0.5;
+            this.addChild(this._messageTailImage);
+        }
+    };
 
     var _Window_Message_standardFontSize      = Window_Message.prototype.standardFontSize;
     Window_Message.prototype.standardFontSize = function() {
@@ -1107,13 +1170,32 @@
     var _Window_Message_updatePlacement      = Window_Message.prototype.updatePlacement;
     Window_Message.prototype.updatePlacement = function() {
         if (typeof Yanfly === 'undefined' || !Yanfly.Message) {
-            this.x = 0;
+            var width = this.windowWidth();
+            this.x = (Graphics.boxWidth - width) / 2;
         }
         _Window_Message_updatePlacement.apply(this, arguments);
         if (!this.isPopup()) {
+            if (this._positionLock) {
+                this.loadContainerInfo();
+            }
             return;
         }
         this.updatePlacementPopup();
+        // Resolve conflict for MKR_MessageWindowCustom.js
+        if (isExistPlugin('MKR_MessageWindowCustom')) {
+            this.processVirtual();
+        }
+    };
+
+    var _Window_Message__updatePauseSign = Window_Message.prototype.hasOwnProperty('_updatePauseSign') ?
+        Window_Message.prototype._updatePauseSign : null;
+    Window_Message.prototype._updatePauseSign = function() {
+        if (_Window_Message__updatePauseSign) {
+            _Window_Message__updatePauseSign.apply(this, arguments);
+        } else {
+            Window_Base.prototype._updatePauseSign.apply(this, arguments);
+        }
+        this.updateTailImage();
     };
 
     Window_Message.prototype.isPopupLower = function() {
@@ -1137,6 +1219,17 @@
             if (isExistPlugin('MPP_MessageEX')) {
                 this._nameWindow.y = this.y - this._nameWindow.height;
                 this._nameWindow.x = this.x;
+            }
+        }
+    };
+
+    Window_Message.prototype.updateTailImage = function() {
+        if (!this.isPopup()) {
+            this._messageTailImage.visible = false;
+        } else if (paramTailImage) {
+            this._messageTailImage.visible = this.isOpen();
+            if (!this.isUsePauseSignTextEnd() && !paramNoUseTail) {
+                this._windowPauseSignSprite.visible = false;
             }
         }
     };
@@ -1181,7 +1274,9 @@
             width += adjust[0];
             height += adjust[1];
         }
-        if (paramNoUseTail) {
+        if (this.isUsePauseSignTextEnd()) {
+            width += this._windowPauseSignSprite.width;
+        } else if (paramNoUseTail) {
             height += 8;
         }
         this.width  = Math.max(width, this.getMinimumWidth());
@@ -1449,6 +1544,9 @@
         Window_NameBox.prototype.updatePlacementPopup = function() {
             this.x = this._parentWindow.x;
             this.y = this._parentWindow.y - this.height;
+            if (!$gameSystem.getMessagePopupId()) {
+                this.openness = 0;
+            }
         };
     }
 
@@ -1579,6 +1677,11 @@
             if (adjust) {
                 width += adjust[0];
                 height += adjust[1];
+            }
+            if (this.isUsePauseSignTextEnd()) {
+                width += this._windowPauseSignSprite.width;
+            } else if (paramNoUseTail) {
+                height += 8;
             }
             this.width  = width;
             this.height = height;
