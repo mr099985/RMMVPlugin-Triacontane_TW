@@ -95,7 +95,7 @@
 // [GitHub] : https://github.com/triacontane/
 //=============================================================================
 /*:
- * @plugindesc 氣泡式對話窗口 [ ver.2.14.5 ]
+ * @plugindesc [ ver.2.14.5 ]氣泡式對話窗口
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param FontSize
@@ -181,9 +181,8 @@
  * @type number
  *
  * @param NoUseTail
- * @text 禁用暫停圖示顯示
- * @desc 禁用暫停圖示的顯示。
- * 未禁用則顯示在預設位置。
+ * @text 禁用暫停圖示顯示結尾
+ * @desc 禁用暫停圖示的顯示訊息結尾功能。顯示在預設位置。
  * @default false
  * @type boolean
  *
