@@ -2,25 +2,27 @@
  ChoiceWindowInMessage.js
 ----------------------------------------------------------------------------
  (C)2019 Triacontane
- Translator : ReIris
  This software is released under the MIT License.
  http://opensource.org/licenses/mit-license.php
 ----------------------------------------------------------------------------
  Version
+ 1.0.2 2019/02/19 選択肢のみ表示するとき、ウィンドウ位置をスクリプトで変えられるよう調整
+ 1.0.1 2019/02/18 顔グラフィックを表示した場合、選択肢のカーソル位置がずれる問題を修正
  1.0.0 2019/02/17 初版
 ----------------------------------------------------------------------------
  [Blog]   : https://triacontane.blogspot.jp/
  [Twitter]: https://twitter.com/triacontane/
  [GitHub] : https://github.com/triacontane/
 =============================================================================*/
-
 /*:
- * @plugindesc 選項於訊息窗口內部插件
+ * @plugindesc [ ver.1.0.2 ]選項顯示於訊息窗口內部插件
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @help ChoiceWindowInMessage.js
  *
- * 讓事件命令的「選項」與「輸入數值」顯示在訊息窗口中。
+ * 讓事件命令的「顯示選項」與「輸入數值」顯示在訊息窗口中。
+ *　
+ * 這個插件沒有插件命令。
  *
  * 利用規約：
  *  不需要作者許可，可以進行修改和二次發布。
@@ -149,17 +151,14 @@
             this.contents.clear();
         }
         if ($gameMessage.isChoice()) {
-            var prevHeight = this.height;
             var lines = $gameMessage.choiceLines();
             if (lines > this.numVisibleRows()) {
                 this.height = this.fittingHeight(lines);
             } else {
                 this.height = this.windowHeight();
             }
-            if (prevHeight !== this.height) {
-                this.updatePlacement();
-            }
         }
+        this.updatePlacement();
         this.open();
     };
 
@@ -190,6 +189,15 @@
     Window_ChoiceList.prototype.updateBackground = function() {
         _Window_ChoiceList_updateBackground.apply(this, arguments);
         this.opacity = 0;
+    };
+
+    var _Window_ChoiceList_itemRect = Window_ChoiceList.prototype.itemRect;
+    Window_ChoiceList.prototype.itemRect = function(index) {
+        var rect = _Window_ChoiceList_itemRect.apply(this, arguments);
+        var newLineX = this._messageWindow.newLineX();
+        rect.x += newLineX;
+        rect.width -= newLineX;
+        return rect;
     };
 
     Window_ChoiceList.prototype.isInnerMessage = function() {
@@ -231,5 +239,12 @@
         } else {
             return this._messageWindow.y + this._messageWindow.height - this.y + 8;
         }
+    };
+
+    var _Window_NumberInput_itemRect = Window_NumberInput.prototype.itemRect;
+    Window_NumberInput.prototype.itemRect = function(index) {
+        var rect = _Window_NumberInput_itemRect.apply(this, arguments);
+        rect.x += this._messageWindow.newLineX();
+        return rect;
     };
 })();
