@@ -1,12 +1,14 @@
 //=============================================================================
 // AnotherNewGame.js
 // ----------------------------------------------------------------------------
-// Copyright (c) 2015 Triacontane
-// Translator : ReIris
+// (C) 2015 Triacontane
 // This plugin is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
 // ----------------------------------------------------------------------------
 // Version
+// 2.0.0 2019/03/19 アナザーロード時に場所移動せず、セーブ位置から開始できる機能を追加
+//                  アナザーニューゲーム時に自動でONになるスイッチを追加
+//                  パラメータの型指定機能に対応
 // 1.4.0 2017/06/18 アナザーニューゲームの追加位置を指定できる機能を追加
 // 1.3.0 2017/05/27 ニューゲームを非表示にできる機能を追加
 // 1.2.4 2017/05/23 プラグインコマンドのヘルプを修正
@@ -19,13 +21,13 @@
 // 1.0.1 2015/11/10 プラグイン適用中にセーブできなくなる不具合を修正
 // 1.0.0 2015/11/07 初版
 // ----------------------------------------------------------------------------
-// [Blog]   : http://triacontane.blogspot.jp/
+// [Blog]   : https://triacontane.blogspot.jp/
 // [Twitter]: https://twitter.com/triacontane/
 // [GitHub] : https://github.com/triacontane/
 //=============================================================================
 
 /*:
- * @plugindesc 添加新遊戲選項插件
+ * @plugindesc [ ver.2.0.0 ]另一個新遊戲追加插件
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param name
@@ -37,55 +39,80 @@
  * @text 地圖ID
  * @desc 目標地圖ID。
  * @default 1
+ * @type number
  *
  * @param map_x
  * @text 地圖 X 座標
  * @desc 目標地圖的 X 座標。
  * @default 1
+ * @type number
  *
  * @param map_y
  * @text 地圖 Y 座標
  * @desc 目標地圖的 Y 座標。
  * @default 1
+ * @type number
  *
  * @param hidden
  * @text 隱藏選項
- * @desc 默認情況下，隱藏選項。可以使用插件命令控制。（ON/OFF）
- * @default OFF
+ * @desc 默認情況下，隱藏選項。
+ * 可以使用插件命令控制。
+ * @default false
+ * @type boolean
  *
  * @param disable
  * @text 禁用選項
- * @desc 默認情況下，禁用選擇選項。可以使用插件命令控制。（ON/OFF）
- * @default OFF
+ * @desc 默認情況下，禁用選擇選項。
+ * 可以使用插件命令控制。
+ * @default false
+ * @type boolean
  *
  * @param file_load
  * @text 讀取檔案
- * @desc 選擇新遊戲選項後，可以通過讀取畫面來載入現有的已保存檔案。（ON/OFF）
- * @default OFF
+ * @desc 選擇新遊戲選項後，可以通過讀取畫面來載入現有的已保存檔案。
+ * @default false
+ * @type boolean
  *
  * @param no_fadeout
  * @text 場景不淡出
- * @desc 當選擇新遊戲選項時，音樂和畫面不會淡出。（ON/OFF）
- * @default OFF
+ * @desc 當選擇新遊戲選項時，音樂和畫面不會淡出。
+ * @default false
+ * @type boolean
  *
  * @param manage_number
  * @text 管理編號
- * @desc 在同一台伺服器上發布多個遊戲時，請為每個遊戲設置不同的值。（RPGazumar不包括在內）
+ * @desc 在同一台伺服器上發布多個遊戲時，
+ * 請為每個遊戲設置不同的值。（RPGazumar不包括在內）
  * @default
  *
  * @param add_position
  * @text 添加位置
- * @desc 這是添加的新遊戲選項位置。（1：新遊戲的上面，2：讀取的上面，3：設置的上面）
+ * @desc 這是添加的新遊戲選項位置。
  * @default 0
+ * @type select
+ * @option 設置下方
+ * @value 0
+ * @option 新遊戲上方
+ * @value 1
+ * @option 繼續上方
+ * @value 2
+ * @option 設置上方
+ * @value 3
+ *
+ * @param switch_id
+ * @text 連動開關 ID
+ * @desc 可以指定在另一個新遊戲啟動時自動打開的開關。
+ * @default 0
+ * @type switch
  *
  * @help 將添加新遊戲選項到標題畫面窗口。
  * 如果選擇這個選項，將直接從指定目標地圖開始新遊戲，與原本開始遊戲可分開。
- * 可製作特典和CG回憶模式，素材註記，迷你游戲，隱藏元素等額外要素。
- * 根據用戶的需求，可用於各種用途。
- *
- * 可以預先隱藏或選擇禁止選項。
- * 這些可以從插件命令中取消，釋放狀態是保存文件
- * 它在整個遊戲中共享。也可以再次禁用取消狀態。
+ * 可製作特典和 CG 回憶模式、素材註記、迷你游戲、隱藏元素等額外要素。
+ * 根據作者的需求，可用於各種用途。
+ *
+ * 可以預先隱藏或選擇禁止選項。
+ * 這些可以從插件命令中解除，並且在儲存檔案之外的遊戲中共用可使用狀態。
+ * 解除的狀態也可以再度禁用。
  *
  * 插件命令詳細訊息
  *   從事件中的「插件命令」執行。
@@ -112,7 +139,7 @@
     var localExtraStage = false;
 
     var getArgBoolean = function(arg) {
-        return arg.toUpperCase() === 'ON';
+        return arg.toUpperCase() === 'ON' || arg.toUpperCase() === 'TRUE';
     };
 
     //=============================================================================
@@ -187,16 +214,23 @@
             this._noFadeout = true;
         }
         if (!getArgBoolean(parameters['file_load'] || '')) {
-            var preMapId           = $dataSystem.startMapId;
-            var preStartX          = $dataSystem.startX;
-            var preStartY          = $dataSystem.startY;
-            $dataSystem.startMapId = parseInt(parameters['map_id'], 10) || 1;
-            $dataSystem.startX     = parseInt(parameters['map_x'], 10) || 1;
-            $dataSystem.startY     = parseInt(parameters['map_y'], 10) || 1;
+            var preMapId  = $dataSystem.startMapId;
+            var preStartX = $dataSystem.startX;
+            var preStartY = $dataSystem.startY;
+            var newMapId  = parseInt(parameters['map_id']);
+            if (newMapId > 0) {
+                $dataSystem.startMapId = newMapId;
+                $dataSystem.startX     = parseInt(parameters['map_x']) || 1;
+                $dataSystem.startY     = parseInt(parameters['map_y']) || 1;
+            }
             this.commandNewGame();
             $dataSystem.startMapId = preMapId;
             $dataSystem.startX     = preStartX;
             $dataSystem.startY     = preStartY;
+            var switchId = parseInt(parameters['switch_id']);
+            if (switchId > 0) {
+                $gameSwitches.setValue(switchId, true);
+            }
         } else {
             this.commandContinue();
             localExtraStage = true;
@@ -224,12 +258,18 @@
     Scene_Load.prototype.onLoadSuccess = function() {
         _Scene_Load_onLoadSuccess.call(this);
         if (localExtraStage) {
-            var mapId = parseInt(parameters['map_id'], 10) || 1;
-            var x     = parseInt(parameters['map_x'], 10) || 1;
-            var y     = parseInt(parameters['map_y'], 10) || 1;
-            $gamePlayer.reserveTransfer(mapId, x, y);
+            var mapId = parseInt(parameters['map_id']);
+            if (mapId > 0) {
+                var x = parseInt(parameters['map_x']) || 1;
+                var y = parseInt(parameters['map_y']) || 1;
+                $gamePlayer.reserveTransfer(mapId, x, y);
+            }
             $gameMap.abortInterpreter();
             DataManager.selectSavefileForNewGame();
+            var switchId = parseInt(parameters['switch_id']);
+            if (switchId > 0) {
+                $gameSwitches.setValue(switchId, true);
+            }
         }
     };
 
@@ -242,7 +282,7 @@
         _Window_TitleCommand_makeCommandList.call(this);
         if (ANGSettingManager.visible) {
             this.addCommand(parameters['name'], 'nameGame2', ANGSettingManager.enable);
-            var addPosition = parseInt(parameters['add_position'], 10);
+            var addPosition = parseInt(parameters['add_position']);
             if (addPosition > 0) {
                 var anotherCommand = this._list.pop();
                 this._list.splice(addPosition - 1, 0, anotherCommand);
@@ -256,7 +296,7 @@
     Window_TitleCommand.prototype.eraseCommandNewGame = function() {
         this._list = this._list.filter(function(command) {
             return command.symbol !== 'newGame';
-        })
+        });
     };
 
     var _Window_TitleCommand_updatePlacement      = Window_TitleCommand.prototype.updatePlacement;
@@ -272,6 +312,7 @@
     function ANGSettingManager() {
         throw new Error('This is a static class');
     }
+
     ANGSettingManager._fileId = -1001;
 
     ANGSettingManager.visible       = false;
