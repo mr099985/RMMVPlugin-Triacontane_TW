@@ -16,12 +16,13 @@
 //=============================================================================
 
 /*:
- * @plugindesc 說明擴張插件
+ * @plugindesc [ ver.1.1.0 ]說明擴張插件
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param swapDescription
  * @text 是否更換說明
- * @desc 忽視原本的說明文替換成注釋裡填寫的說明。設定為false的情況會在下一行出現原本的說明文。
+ * @desc 忽視原本的說明文替換成注釋裡填寫的說明。
+ * 設定為false的情況會在下一行出現原本的說明文。
  * @default true
  * @type boolean
  *
@@ -39,7 +40,8 @@
  *
  * @param notePrefix
  * @text 注釋欄前綴
- * @desc 在命名其他插件備註字段或插件命令時指定的前綴。通常不需要指定它。
+ * @desc 在命名其他插件備註字段或插件命令時指定的前綴。
+ * 通常不需要指定它。
  * @default
  *
  * @help DescriptionExtend.js
