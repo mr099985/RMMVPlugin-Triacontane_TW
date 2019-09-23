@@ -2,7 +2,6 @@
 // CustomizeConfigItem.js
 // ----------------------------------------------------------------------------
 // Copyright (c) 2015 Triacontane
-// Translator : ReIris
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
 // ----------------------------------------------------------------------------
@@ -680,7 +679,7 @@
     };
 
     Window_Options.prototype.numberStatusText = function(value) {
-        //return value;
+        return value;
     };
 
     Window_Options.prototype.stringStatusText = function(value, symbol) {
