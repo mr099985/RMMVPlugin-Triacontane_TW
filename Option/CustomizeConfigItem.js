@@ -25,7 +25,7 @@
 //=============================================================================
 
 /*:
- * @plugindesc 設置畫面追加任意項目插件
+ * @plugindesc [ ver.2.1.0 ]系統選項畫面追加任意項目
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param 数値項目
@@ -57,29 +57,31 @@
  * 不需要的項目請設置為空白。
  *
  * ・開關項目：
- * 可選擇 ON/OFF 的項目。指定編號ID的開關與值會將會同步。
+ * 可選擇開關項目。指定編號 ID 的開關與值會將會同步。
  * 如果在設置畫面設定值，會直接反應在開關上，如果變更開關
  * 同時也會反應在設置畫面中。
- * 另外，值在檔案之間為共享數值。
+ * 另外，項目的值在檔案之間為共享數值。
  * 如果設置隱藏項目，將不會在設置畫面中顯示。
  * 除非您繼續遊戲，否則它可用於不顯示的項目。
  * 隱藏項目可以使用插件命令中顯示。
  *
- * 腳本為進階使用。當光標放在目標上，然後按確定
- * 執行指定的JavaScript。
+ * 腳本為進階使用。
+ * 當光標放在目標上，然後按確定。
+ * 將執行指定的 JavaScript 。
  * 主要用於專用設置畫面的轉換等等。
  *
  * ・數值項目：
- * 可選擇調整數值的項目。指定的變數ID與值將會同步。
+ * 可選擇調整數值的項目。指定的變數 ID 與值將會同步。
  * 除了在開關項中指定的內容、
  * 也要指定最小值和最大值以及一個輸入更改的變數。
  *
  * ・音量項目：
- * 可選擇調整音量的項目。可將其用於每個角色的音量，
- * 其項目與BGM音量等等相同。
+ * 可選擇調整音量的項目。
+ * 可將其用於每個角色的音量，其項目與 BGM 音量等等相同。
  *
  * ・文字項目：
- * 可選擇調整文字的項目。指定項目的文字內容數組並可以選擇。
+ * 可選擇調整文字的項目。
+ * 指定項目的文字內容數組並可以選擇。
  * 設定選擇的文字順序索引(起始為 0 )的變數值。
  * 其中要設置為預設值的是索引值。
  *
@@ -89,7 +91,7 @@
  *
  *  CC_UNLOCK [項目名]
  *  指定隱藏項目解除隱藏
- *  使用範例：CC_UNLOCK 数値項目1
+ *  使用範例：CC_UNLOCK 數值項目 1
  *
  * 利用規約：
  *  不需要作者許可，可以進行修改和二次發布。
@@ -99,8 +101,8 @@
 /*~struct~NumberData:
  * @param Name
  * @text 項目名稱
- * @desc 設置的項目名稱。
- * @default 数値項目1
+ * @desc 設定數值項目的名稱。
+ * @default 數值項目 1
  *
  * @param DefaultValue
  * @text 預設值
@@ -109,8 +111,8 @@
  * @type number
  *
  * @param VariableID
- * @text 變數ID
- * @desc 此項目中使用的變數ID。
+ * @text 變數 ID
+ * @desc 此項目中使用的變數 ID。
  * @default 0
  * @type variable
  *
@@ -166,8 +168,8 @@
 /*~struct~BooleanData:
  * @param Name
  * @text 項目名稱
- * @desc 設置的項目名稱。
- * @default 開關項目1
+ * @desc 設定開關項目的名稱。
+ * @default 開關項目 1
  *
  * @param DefaultValue
  * @text 預設值
@@ -177,7 +179,7 @@
  *
  * @param SwitchID
  * @text 開關ID
- * @desc 此項目中使用的開關ID。
+ * @desc 此項目中使用的開關 ID。
  * @default 0
  * @type switch
  *
@@ -215,18 +217,19 @@
 /*~struct~StringData:
  * @param Name
  * @text 項目名稱
- * @desc 設置的項目名稱。
- * @default 文字列項目1
+ * @desc 設定文字項目的名稱。
+ * @default 文字項目 1
  *
  * @param DefaultValue
  * @text 預設值
- * @desc 此項目的初期預設值。指定索引數值。(起始為 0 )
+ * @desc 此項目的初期預設值。
+ * 指定索引數值。(起始為 0 )
  * @default 0
  * @type number
  *
  * @param VariableID
  * @text 變數ID
- * @desc 此項目中使用的變數ID。
+ * @desc 此項目中使用的變數 ID。
  * @default 0
  * @type variable
  *
@@ -270,8 +273,8 @@
 /*~struct~VolumeData:
  * @param Name
  * @text 項目名稱
- * @desc 設置的項目名稱。
- * @default 音量項目1
+ * @desc 設定音量項目的名稱。
+ * @default 音量項目 1
  *
  * @param DefaultValue
  * @text 預設值
@@ -281,7 +284,7 @@
  *
  * @param VariableID
  * @text 變數ID
- * @desc 此項目中使用的變數ID。
+ * @desc 此項目中使用的變數 ID。
  * @default 0
  * @type variable
  *
