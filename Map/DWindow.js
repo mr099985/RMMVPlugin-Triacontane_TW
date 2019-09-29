@@ -21,7 +21,7 @@
 // [GitHub] : https://github.com/triacontane/
 //=============================================================================
 /*:
- * @plugindesc [ ver.1.3.3 ]動態窗口生成插件
+ * @plugindesc [ ver.1.3.3 ]產生動態窗口
  * @author トリアコンタン( 翻譯 : ReIris )
  *
  * @param GameVariablesXPos
