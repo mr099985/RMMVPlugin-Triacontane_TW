@@ -15,8 +15,8 @@
 // [Twitter]: https://twitter.com/triacontane/
 // [GitHub] : https://github.com/triacontane/
 //=============================================================================
-/*:ja
- * @plugindesc 窗口觸碰模式變更插件
+/*:
+ * @plugindesc [ ver.1.1.1 ]窗口觸碰模式變更
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param 枠外タッチ動作
