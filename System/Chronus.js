@@ -2,11 +2,13 @@
 // Chronus.js
 // ----------------------------------------------------------------------------
 // (C) 2015 Triacontane
-// Translator : ReIris
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
 // ----------------------------------------------------------------------------
 // Version
+// 1.14.0 2019/09/01 時間帯名称をカレンダーに表示する機能を追加
+// 1.13.1 2019/06/09 ニューゲーム時もしくはプロジェクト保存後のロード時に場所移動の時間が経過してしまう問題を修正
+// 1.13.0 2019/04/20 カレンダーを初期状態で非表示にできるパラメータを追加
 // 1.12.0 2018/12/27 カレンダー表示に行間を設定できる機能を追加
 // 1.11.1 2018/10/14 実時間表示に切り替えてから内部時間に反映されるまでにラグがある問題の修正
 // 1.11.0 2018/10/14 カレンダーの枠を非表示にできる機能を追加
@@ -57,8 +59,8 @@
 //=============================================================================
 
 /*:
- * @plugindesc 遊戲內導入時間插件
- * @author トリアコンタン ( 翻譯 : ReIris )
+ * @plugindesc [ ver.1.14.0 ]遊戲內導入時間
+ * @author トリアコンタン( 翻譯 : ReIris )
  *
  * @param 月ごとの日数配列
  * @text 每月天數配置
@@ -70,13 +72,13 @@
  * @text 月份名配置
  * @desc 月的名稱分配。
  * 用逗號(,)分隔指定。數量是自由定義的。
- * @default Jan.,Feb.,Mar.,Apr.,May.,Jun.,Jul.,Aug.,Sep.,Oct.,Nov.,Dec.
+ * @default 一月,二月,三月,四月,五月,六月,七月,八月,九月,十月,十一月,十二月
  *
  * @param 曜日配列
  * @text 星期幾配置
  * @desc 星期幾的名稱分配。
  * 用逗號(,)分隔指定。數量是自由定義的。
- * @default (日),(月),(火),(水),(木),(金),(土)
+ * @default (日),(一),(二),(三),(四),(五),(六)
  *
  * @param 自然時間加算
  * @text 自然時間加算
@@ -111,97 +113,97 @@
  * @default 5
  *
  * @param 年のゲーム変数
- * @text 年份變數ID
+ * @text 年份遊戲變數
  * @type variable
  * @desc 指定的遊戲變數自動設置為「年份」的值。
  * @default 0
  *
  * @param 月のゲーム変数
- * @text 月份變數ID
+ * @text 月份遊戲變數
  * @type variable
  * @desc 指定的遊戲變數自動設置為「月份」的值。
  * @default 0
  *
  * @param 日のゲーム変数
- * @text 天數變數ID
+ * @text 天數遊戲變數
  * @type variable
  * @desc 指定的遊戲變數自動設置為「天數」的值。
  * @default 0
  *
  * @param 曜日IDのゲーム変数
- * @text 星期幾變數ID
+ * @text 星期幾遊戲變數
  * @type variable
  * @desc 指定的遊戲變數自動設置為「星期幾」的值。
  * @default 0
  *
  * @param 曜日名のゲーム変数
- * @text 星期幾名稱變數ID
+ * @text 星期幾名稱遊戲變數
  * @type variable
  * @desc 指定的遊戲變數自動設置為「星期幾」的名稱值。
  * 請注意，遊戲變數包含一個字符串。
  * @default 0
  *
  * @param 時のゲーム変数
- * @text 小時變數ID
+ * @text 小時遊戲變數
  * @type variable
  * @desc 指定的遊戲變數自動設置為「小時」的值。
  * @default 0
  *
  * @param 分のゲーム変数
- * @text 分鐘變數ID
+ * @text 分鐘遊戲變數
  * @type variable
  * @desc 指定的遊戲變數自動設置為「分鐘」的值。
  * @default 0
  *
  * @param 累計時間のゲーム変数
- * @text 累積時間變數ID
+ * @text 累積時間遊戲變數
  * @type variable
  * @desc 指定的遊戲變數自動設置為「累計時間」(以分鐘為單位)的值。
  * @default 0
  *
  * @param 累計日数のゲーム変数
- * @text 累積天數變數ID
+ * @text 累積天數遊戲變數
  * @type variable
  * @desc 指定的遊戲變數自動設置為「累計天數」的值。
  * @default 0
  *
  * @param 時間帯IDのゲーム変数
- * @text 時間帶變數ID
+ * @text 時間帶遊戲變數
  * @type variable
  * @desc 指定的遊戲變數自動設置為「時間帶」的值。
- * 0:半夜 1:早晨 2:上午 3:白天 4:黃昏 5:夜晚
+ * 0：深夜 / 1：清晨 / 2：早晨 / 3：中午 / 4：傍晚 / 5：夜晚
  * @default 0
  *
  * @param 天候IDのゲーム変数
- * @text 天氣變數ID
+ * @text 天氣遊戲變數
  * @type variable
  * @desc 指定的遊戲變數自動設置為「天氣」的值。
- * 0:なし 1:雨 2:嵐 3:雪
+ * 0：無 / 1：雨 / 2：風暴 / 3：雪
  * @default 0
  *
  * @param フォーマット時間の変数
- * @text 格式化時間變數ID
+ * @text 格式化時間變數
  * @type variable
  * @desc 基於「格式計算公式」自動設置計算結果。
  * @default 0
  *
  * @param フォーマット時間の計算式
  * @text 格式化時間公式
- * @desc 使用日期和時間格式的公式內容。
- * YYYY:年 MON:月名 MM:月 DD:日 HH24:時(24) HH:時(12) AM:午前or午後 MI:分 DY:星期幾
+ * @desc 使用日期和時間格式的公式內容。（詳細參考幫助）
+ * YYYY:年 MON:月名 MM:月 DD:日 HH24:時(24) 等等
  * @default HH24 * 60 + MI
  *
  * @param 日時フォーマット1
  * @text 日期和時間格式 1
- * @desc 顯示在地圖上日期窗口第一行的文字。
- * YYYY:年 MON:月名 MM:月 DD:日 HH24:時(24) HH:時(12) AM:午前 or 午後 MI:分 DY:曜日
- * @default YYYY年 MM月 DD日 DY
+ * @desc 使用日期和時間格式的公式內容。（詳細參考幫助）
+ * YYYY:年 MON:月名 MM:月 DD:日 HH24:時(24) 等等
+ * @default YYYY年 MON DD日 DY
  *
  * @param 日時フォーマット2
  * @text 日期和時間格式 2
- * @desc 顯示在地圖上日期窗口第二行的文字。
- * YYYY:年 MON:月名 MM:月 DD:日 HH24:時(24) HH:時(12) AM:午前 or 午後 MI:分 DY:曜日
- * @default AMHH時 MI分
+ * @desc 使用日期和時間格式的公式內容。（詳細參考幫助）
+ * YYYY:年 MON:月名 MM:月 DD:日 HH24:時(24) 等等
+ * @default AM HH時 MI分 TZ
  *
  * @param 日時フォーマット行間
  * @text 日曆行間
@@ -237,6 +239,12 @@
  * @text 日曆窗口背景不顯示
  * @type boolean
  * @desc 日曆的窗口框不顯示。
+ * @default false
+ *
+ * @param カレンダーの非表示
+ * @text 日曆不顯示
+ * @type boolean
+ * @desc 日曆的不顯示。可以使用插件命令控制。
  * @default false
  *
  * @param カレンダー余白
@@ -302,7 +310,7 @@
  *
  * 您可以使用以下日期格式。
  * YYYY:年 MON:月名 MM:月 DD:日 HH24:時(24) HH:時(12)
- * AM:中午前 or 中午後 MI:分 DY:星期幾
+ * AM:中午前 or 中午後 MI:分 DY:星期幾 TZ:時間帶名稱
  *
  * 並且可以透過準備符合格式的圖片來顯示時鐘。
  * 您可以調整每個圖片的顯示位置。
@@ -317,8 +325,8 @@
  * http://tm.lucky-duet.com/viewtopic.php?f=47&t=555&p=1615#p1615
  *
  * 插件命令詳細
- * 事件命令中的「插件命令」執行。
- * 控制字元\V[n]可用於指定值。
+ *   事件命令中的「插件命令」執行。
+ *   控制字元\V[n]可用於指定值。
  *  （參數中間使用半形空格區分）
  *
  * C_ADD_TIME [分] : 將當前時間加上指定的分鐘。
@@ -338,8 +346,8 @@
  * C_SET_SPEED [分] : 設置每秒實時的時間流逝率。
  * C_SHOW_CLOCK : 顯示時鐘。
  * C_HIDE_CLOCK : 不顯示時鐘。
- * C_SET_TIME_REAL : 將時間推進方法更改為實時。
- * C_SET_TIME_VIRTUAL : 變更如何獲得遊戲時間的時間。
+ * C_SET_TIME_REAL : 將時間推進方法變更為實時（現實時間）。
+ * C_SET_TIME_VIRTUAL : 將時間推進方法變更為遊戲流逝時間。
  * C_SET_RAINY_PERCENT [準確率] : 設定下雨概率（0-100）。
  * C_INIT_TOTAL_TIME : 重置累積時間，累計天數。
  *
@@ -376,16 +384,16 @@
  * C_SET_SELF_SWITCH_NAMED_TIMER timer 180 B OFF
  * ※目標事件是執行插件命令的事件。
  *
- * 解除，停止和開始命令如下。
- * C_CLEAR_TIMER [計時器名稱] # 計時器解除。
- * C_STOP_TIMER [計時器名稱]  # 計時器暫時停止。
- * C_START_TIMER [計時器名稱] # 計時器開始。
+ * 取消，停止和恢復命令如下。
+ * C_CLEAR_TIMER [計時器名稱] # 取消該計時器名稱的計時。
+ * C_STOP_TIMER [計時器名稱]  # 暫停該計時器名稱的計時。
+ * C_START_TIMER [計時器名稱] # 重啟該計時器名稱的計時。
  *
  * 注釋欄詳細
- *  您可以通過在「圖塊設置」和「地圖注釋」中輸入以下內容，
- *  暫時禁用自動天氣和顏色更改。
- *  當您想要在室內地圖或事件場景等中暫時禁用時，可以使用它。。
- *  以設置在地圖注釋欄中優先順序排列。
+ *  可以通過在「圖塊設置」和「地圖注釋」中輸入以下內容，
+ *  將暫時禁用自動天氣和顏色更改。
+ *  當想要在室內地圖或事件場景等中暫時禁用時，可以使用它。
+ *  設定在地圖的注釋欄將優先執行。
  *
  * <C_Tint:OFF>    # 暫時禁用色調變化。
  * <C_Weather:OFF> # 暫時禁用天氣。
@@ -440,23 +448,23 @@ function Window_Chronus() {
 (function() {
     'use strict';
     //=============================================================================
-    // ユーザ書き換え領域 - 開始 -
+    // 使用者設定區域 - 開始 -
     //=============================================================================
     var settings = {
         /* timeZone:時間帯 */
         timeZone: [
-            /* name:時間帯名称 start:開始時刻 end:終了時刻 timeId:時間帯ID */
-            {name: '深夜', start: 0, end: 4, timeId: 0},
-            {name: '早朝', start: 5, end: 6, timeId: 1},
-            {name: '朝', start: 7, end: 11, timeId: 2},
-            {name: '昼', start: 12, end: 16, timeId: 3},
-            {name: '夕方', start: 17, end: 18, timeId: 4},
-            {name: '夜', start: 19, end: 21, timeId: 5},
+            /* name:時間帶名稱 start:開始時間 end:結束時間 timeId:時間帶 ID */
+            {name: '半夜', start: 0, end: 4, timeId: 0},
+            {name: '清晨', start: 5, end: 6, timeId: 1},
+            {name: '早上', start: 7, end: 11, timeId: 2},
+            {name: '中午', start: 12, end: 16, timeId: 3},
+            {name: '傍晚', start: 17, end: 18, timeId: 4},
+            {name: '晚上', start: 19, end: 21, timeId: 5},
             {name: '深夜', start: 22, end: 24, timeId: 0}
         ],
-        /* timeTone:時間帯ごとの色調 */
+        /* timeTone:時間帶的畫面色調 */
         timeTone: [
-            /* timeId:時間帯ID value:色調[赤(-255...255),緑(-255...255),青(-255...255),グレー(0...255)] */
+            /* timeId: 時間帶 ID , value:色調[紅(-255...255),緑(-255...255),藍(-255...255),灰(0...255)] */
             {timeId: 0, value: [-102, -102, -68, 102]},
             {timeId: 1, value: [-68, -68, 0, 0]},
             {timeId: 2, value: [0, 0, 0, 0]},
@@ -466,7 +474,7 @@ function Window_Chronus() {
         ]
     };
     //=============================================================================
-    // ユーザ書き換え領域 - 終了 -
+    // 使用者設定區域 - 結束 -
     //=============================================================================
     var pluginName    = 'Chronus';
     var metaTagPrefix = 'C_';
@@ -573,6 +581,7 @@ function Window_Chronus() {
     var paramHourHandFile        = getParamString('短針画像ファイル');
     var paramCalendarFrameHidden = getParamBoolean('カレンダー枠の非表示');
     var paramCalendarLineSpacing = getParamNumber('日時フォーマット行間', 0);
+    var paramCalendarHidden      = getParamBoolean('カレンダーの非表示');
 
     //=============================================================================
     // Game_Interpreter
@@ -790,8 +799,9 @@ function Window_Chronus() {
     //=============================================================================
     var _Game_Player_performTransfer      = Game_Player.prototype.performTransfer;
     Game_Player.prototype.performTransfer = function() {
+        var realTransfer = this._newMapId !== $gameMap.mapId() && $gameMap.mapId() > 0;
+        $gameSystem.chronus().transfer(realTransfer);
         _Game_Player_performTransfer.call(this);
-        $gameSystem.chronus().transfer();
     };
 
     //=============================================================================
@@ -989,14 +999,11 @@ function Window_Chronus() {
     //  時の流れを扱うクラスです。このクラスはGame_Systemクラスで生成されます。
     //  セーブデータの保存対象のためグローバル領域に定義します。
     //=============================================================================
-    Game_Chronus.prototype             = Object.create(Game_Chronus.prototype);
-    Game_Chronus.prototype.constructor = Game_Chronus;
     Game_Chronus.weatherTypes          = ['none', 'rain', 'storm', 'snow'];
-
     Game_Chronus.prototype.initialize = function() {
         this._stop            = false;        // 停止フラグ（全ての加算に対して有効。ただし手動による加算は例外）
         this._disableTint     = false;        // 色調変更禁止フラグ
-        this._calendarVisible = true;         // カレンダー表示フラグ
+        this._calendarVisible = !paramCalendarHidden; // カレンダー表示フラグ
         this._disableWeather  = false;        // 天候制御禁止フラグ
         this._weatherType     = 0;            // 天候タイプ(0:なし 1:雨 2:嵐 :3雪)
         this._weatherPower    = 0;            // 天候の強さ
@@ -1285,9 +1292,11 @@ function Window_Chronus() {
         this.addTime(this._timeBattleAdd + this._timeTurnAdd * $gameTroop.turnCount());
     };
 
-    Game_Chronus.prototype.transfer = function() {
+    Game_Chronus.prototype.transfer = function(realTransfer) {
         if (this.isStop()) return;
-        this.addTime(this._timeTransferAdd);
+        if (realTransfer) {
+            this.addTime(this._timeTransferAdd);
+        }
         this.demandRefresh(true);
     };
 
@@ -1495,14 +1504,17 @@ function Window_Chronus() {
         }.bind(this));
         format = format.replace(/AM/gi, function() {
             return Math.floor(this.getHour() / 12) === 0 ?
-                $gameSystem.isJapanese() ? '午前' : 'Morning  ' :
-                $gameSystem.isJapanese() ? '午後' : 'Afternoon';
+                $gameSystem.isJapanese() ? '午前' : '上午' : //更改「上午」名稱
+                $gameSystem.isJapanese() ? '午後' : '下午';//更改「下午」名稱
         }.bind(this));
         format = format.replace(/MI/gi, function() {
             return this.getValuePadding(this.getMinute(), 2);
         }.bind(this));
         format = format.replace(/DY/gi, function() {
             return this.getWeekName();
+        }.bind(this));
+        format = format.replace(/TZ/gi, function() {
+            return this.getTimeZoneName();
         }.bind(this));
         return format;
     };
@@ -1513,6 +1525,13 @@ function Window_Chronus() {
             if (this.isHourInRange(zoneInfo.start, zoneInfo.end)) timeId = zoneInfo.timeId;
         }.bind(this));
         return timeId;
+    };
+
+    Game_Chronus.prototype.getTimeZoneName = function() {
+        var timeId = this.getTimeZone();
+        return settings.timeZone.filter(function(zoneInfo) {
+            return zoneInfo.timeId === timeId;
+        })[0].name;
     };
 
     Game_Chronus.prototype.getWeatherTypeId = function() {
