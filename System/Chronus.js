@@ -404,7 +404,7 @@
  * <C_NoStop:ON>   # 事件執行中推進時間。(ON/OFF)
  *
  * 高級設置
- * 您可以通過參考程式碼中的「用戶重寫區域」來更改以下內容。
+ * 您可以通過參考程式碼中的「使用者重寫區域」來更改以下內容。
  *  時間帶設定（從早上什麼時間到什麼時間等）
  *  每個時間帶的色調（但是如果天氣惡劣，將進行校正）
  *
@@ -460,7 +460,7 @@ function Window_Chronus() {
             {name: '中午', start: 12, end: 16, timeId: 3},
             {name: '傍晚', start: 17, end: 18, timeId: 4},
             {name: '晚上', start: 19, end: 21, timeId: 5},
-            {name: '深夜', start: 22, end: 24, timeId: 0}
+            {name: '深夜', start: 22, end: 24, timeId: 6}
         ],
         /* timeTone:時間帶的畫面色調 */
         timeTone: [
