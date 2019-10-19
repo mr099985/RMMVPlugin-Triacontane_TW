@@ -48,7 +48,7 @@
  *
  * @param TitleImage1
  * @text 標題背景圖片 1
- * @desc 標題 1 的背景圖片文件名(img/titles1)。
+ * @desc 標題 1 的背景圖片檔案名(img/titles1)。
  * @default
  * @require 1
  * @dir img/titles1/
@@ -56,7 +56,7 @@
  *
  * @param TitleBgm1
  * @text 標題背景音樂 1
- * @desc 標題 1 演奏的BGM文件名(audio/bgm)。
+ * @desc 標題 1 演奏的 BGM 檔案名(audio/bgm)。
  * @default
  * @require 1
  * @dir audio/bgm/
@@ -69,7 +69,7 @@
  *
  * @param TitleImage2
  * @text 標題背景圖片 2
- * @desc 標題 2 的背景圖片文件名(img/titles1)。
+ * @desc 標題 2 的背景圖片檔案名(img/titles1)。
  * @default
  * @require 1
  * @dir img/titles1/
@@ -77,7 +77,7 @@
  *
  * @param TitleBgm2
  * @text 標題背景音樂 2
- * @desc 標題 2 演奏的BGM文件名(audio/bgm)。
+ * @desc 標題 2 演奏的 BGM 檔案名(audio/bgm)。
  * @default
  * @require 1
  * @dir audio/bgm/
@@ -90,7 +90,7 @@
  *
  * @param TitleImage3
  * @text 標題背景圖片 3
- * @desc 標題 3 的背景圖片文件名(img/titles1)。
+ * @desc 標題 3 的背景圖片檔案名(img/titles1)。
  * @default
  * @require 1
  * @dir img/titles1/
@@ -98,7 +98,7 @@
  *
  * @param TitleBgm3
  * @text 標題背景音樂 3
- * @desc 標題 3 演奏的BGM文件名(audio/bgm)。
+ * @desc 標題 3 演奏的 BGM 檔案名(audio/bgm)。
  * @default
  * @require 1
  * @dir audio/bgm/
@@ -111,12 +111,12 @@
  *
  * @param TitleImageAfter
  * @text 標題背景圖片 4 以上
- * @desc 如果要使用 4 個以上的標題，需要使用逗號來區分背景圖片文件名(img/titles1)。例(aaa,bbb,ccc)
+ * @desc 如果要使用 4 個以上的標題，需要使用逗號來區分背景圖片檔案名(img/titles1)。例(aaa,bbb,ccc)
  * @default
  *
  * @param TitleBgmAfter
  * @text 標題背景音樂 4 以上
- * @desc 如果要使用 4 個以上的標題，需要使用逗號來區分BGM文件名(audio/bgm)。例(aaa,bbb,ccc)
+ * @desc 如果要使用 4 個以上的標題，需要使用逗號來區分 BGM 檔案名(audio/bgm)。例(aaa,bbb,ccc)
  * @default
  *
  * @help 對應遊戲進度變更標題畫面背景與背景音樂。
