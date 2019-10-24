@@ -21,13 +21,13 @@
 //=============================================================================
 
 /*:
- * @plugindesc 僅有開始遊戲插件
+ * @plugindesc [ ver.2.1.0 ]讓標題畫面直接開始遊戲
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param startString
  * @text 開始遊戲文字
  * @desc 開始遊戲所顯示的提示文字。
- * @default Press Start
+ * @default -Press Start-
  *
  * @param font
  * @text 字體
@@ -119,7 +119,7 @@
  *
  * @param italic
  * @desc 是否斜體
- * @default true
+ * @default false
  * @type boolean
  *
  * @param color
