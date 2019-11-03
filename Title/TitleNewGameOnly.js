@@ -74,6 +74,7 @@
 
 /*~struct~AudioSe:
  * @param name
+ * @text 檔案名稱
  * @desc 音效文件名稱
  * @default
  * @require 1
@@ -81,6 +82,7 @@
  * @type file
  *
  * @param volume
+ * @text 音量
  * @desc 音量
  * @default 90
  * @type number
@@ -88,6 +90,7 @@
  * @max 100
  *
  * @param pitch
+ * @text 音調
  * @desc 音調
  * @default 100
  * @type number
@@ -95,6 +98,7 @@
  * @max 150
  *
  * @param pan
+ * @text 左右聲道
  * @desc 左右聲道
  * @default 0
  * @type number
@@ -104,25 +108,30 @@
 
 /*~struct~Font:
  * @param name
+ * @text 字體名稱
  * @desc 字體名。不指定的情況下留空
  * @default
  *
  * @param size
+ * @text 文字大小
  * @desc 文字大小
  * @default 53
  * @type number
  *
  * @param bold
+ * @text 是否粗體
  * @desc 是否粗體
  * @default false
  * @type boolean
  *
  * @param italic
+ * @text 是否斜體
  * @desc 是否斜體
  * @default false
  * @type boolean
  *
  * @param color
+ * @text 文字顏色
  * @desc 文字顏色
  * @default rgba(255,255,255,1.0)
  */
