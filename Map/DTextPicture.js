@@ -6,6 +6,9 @@
 // http://opensource.org/licenses/mit-license.php
 // ----------------------------------------------------------------------------
 // Version
+// 1.15.0 2019/10/21 カーソルのアクティブ状態を変更できるコマンドを追加
+//                   アイテム表示の制御文字でアイコン表示可否を変更できる設定を追加
+// 1.14.0 2019/01/13 背景ウィンドウにカーソル表示できる機能を追加
 // 1.13.0 2018/11/25 背景色のグラデーションを設定できる機能を追加
 // 1.12.0 2018/11/08 背景ウィンドウの透明度と文字列ピクチャの透明度を連動させるよう仕様変更
 // 1.11.1 2018/10/20 プラグイン等でGame_Variables.prototype.setValueを呼んだとき、変数の添え字に文字列型の数値を渡した場合も変数のリアルタイム表示が効くよう修正
@@ -51,19 +54,26 @@
 //=============================================================================
 
 /*:
- * @plugindesc [ ver.1.13.0 ]產生動態文字圖片
+ * @plugindesc [ ver.1.15.0 ]產生動態文字圖片
  * @author トリアコンタン( 翻譯 : ReIris )
  *
- * @help 提供動態生成具有指定文字的圖片命令。
+ * @param itemIconSwitchId
+ * @text 道具圖標開關 ID
+ * @desc 當指定開關 ID 為 ON 時，將顯示帶有 \ITEM[n] 的圖標。
+ * 沒有指定的情況將常時顯示。
+ * @default 0
+ * @type switch
+ *
+ * @help 提供動態生成具有指定文字圖片的命令。
  * 各種控制字元（\v[n]等）也可用於文字，並且當控制字元顯示的變數發生變化時，
  * 您可以實時更新圖像的內容。
  *
- * 按以下步驟顯示動態文字圖片
- *  1 : 插件命令[D_TEXT]指定要繪製的文字和參數（參照下方範例）
- *  2 : 插件命令[D_TEXT_SETTING]指定背景顏色和對齊方式（任意）
- *  3 : 事件命令「顯示圖片」並且「圖片」未被選中。
- * ※ 進行步驟１時不會顯示文字圖片，所以最後需要用「顯示圖片」的命令呼叫。
- * ※ 在顯示圖片之前，通過多次執行D_TEXT可以顯示多行。
+ * 按以下步驟顯示動態文字圖片。
+ *  1 : 插件命令 [D_TEXT] 指定要繪製的文字和參數（參照下方範例）。
+ *  2 : 插件命令 [D_TEXT_SETTING] 指定背景顏色和對齊方式（任意）
+ *  3 : 事件命令「顯示圖片」，並且「圖片」未選擇圖片檔案。
+ * ※ 進行步驟 1 時不會直接顯示文字圖片，所以最後需要用「顯示圖片」的命令呼叫。
+ * ※ 在顯示圖片之前，通過多次執行 D_TEXT ，可以顯示多行文字。
  *
  * ※ 從ver1.4.0開始，如果在執行[D_TEXT]後在「顯示圖片」中指定「圖片」，
  * 則暫停動態文字圖片生成並像往常一樣顯示「圖片」。
@@ -75,16 +85,16 @@
  *  D_TEXT [描繪文字內容] [文字大小] : 動態文字圖片生成準備
  *  範例：D_TEXT 測試文字 32
  *
- *  顯示後，您可以像普通圖片一樣移動，旋轉和擦除。
- *  文字顯示還支持控制字元，如變量和角色名稱的顯示。
+ * 顯示後，您可以像普通圖片一樣移動，旋轉和擦除。
+ *  文字顯示還支持控制字元，如變數和角色名稱的顯示。
  *
  *  D_TEXT_SETTING ALIGN [對齊] : 對齊設定（左對齊、中間對齊、右對齊）
- *  0:左對齊 1:中間對齊 2:右對齊
+ *  0 : 左對齊 / 1 : 中間對齊 / 2 : 右對齊
  *
  *  範例：D_TEXT_SETTING ALIGN 0
  *        D_TEXT_SETTING ALIGN CENTER
  *
- *  D_TEXT_SETTING BG_COLOR [背景色] : 背景顏色設置（與CSS顏色規格相同的格式）
+ *  D_TEXT_SETTING BG_COLOR [背景色] : 背景顏色設置（與 CSS 顏色規格相同的格式）
  *
  *  範例：D_TEXT_SETTING BG_COLOR black
  *        D_TEXT_SETTING BG_COLOR #336699
@@ -107,9 +117,9 @@
  *  範例：D_TEXT_SETTING WINDOW ON
  *
  *  D_TEXT_SETTING FONT [字體名稱] : 更改描繪字體
- *  例子：D_TEXT_SETTING FONT ＭＳ Ｐ明朝
+ *  範例：D_TEXT_SETTING FONT ＭＳ Ｐ明朝
  *
- * 與D_TEXT一樣，這些設置應在顯示圖片之前完成。
+ * 與 D_TEXT 一樣，這些設置應在顯示圖片之前完成。
  *
  * 對應的控制字元一覽（與事件命令的「文章表示」一樣）
  * \V[n]
@@ -123,11 +133,11 @@
  *
  * 専用控制字元
  * \V[n,m]( m 為該變數的位數 )
- * \item[n]   n 個物品的訊息（圖標+名）
- * \weapon[n] n 個武器的訊息（圖標+名）
- * \armor[n]  n 個防具的訊息（圖標+名）
- * \skill[n]  n 個技能的訊息（圖標+名）
- * \state[n]  n 個狀態的訊息（圖標+名）
+ * \item[n]   n 個物品的訊息（圖標 + 名稱）
+ * \weapon[n] n 個武器的訊息（圖標 + 名稱）
+ * \armor[n]  n 個防具的訊息（圖標 + 名稱）
+ * \skill[n]  n 個技能的訊息（圖標 + 名稱）
+ * \state[n]  n 個狀態的訊息（圖標 + 名稱）
  * \oc[c] 將文字邊框顏色設置為「c」（※1）
  * \ow[n] 將文字邊框寬度設置為「n」（例如\ ow [5]）
  * \f[b] 粗體字體
@@ -137,7 +147,20 @@
  * ※1 如何指定文字邊框顏色
  * \oc[red]  由顏色名稱指定
  * \oc[rgb(0,255,0)] 由顏色代碼指定
- * \oc[2] 與文字代碼顏色編號\c[n]相同
+ * \oc[2] 與文字代碼顏色編號 \c[n] 相同
+ *
+ * 當背景是以窗口顯示的時候，顯示光標。
+ * 在顯示動態文字圖片生成後執行這個命令。
+ *  D_TEXT_WINDOW_CURSOR 1 ON  # 在圖片 [1] 上顯示窗口光標。
+ *  D_TEXT_WINDOW_CURSOR 2 OFF # 在圖片 [2] 上刪除窗口光標。
+ *
+ * 光標的狀態啟用變更命令可以透過以下內容。
+ *  D_TEXT_WINDOW_CURSOR_ACTIVE 2 ON  # 啟用圖片 [2] 的光標。
+ *  D_TEXT_WINDOW_CURSOR_ACTIVE 1 OFF # 停止圖片 [1] 的光標。
+ *
+ * 要指定光標矩形的座標可以透過以下內容。
+ *  D_TEXT_WINDOW_CURSOR 1 ON 0 0 100 100  # 在圖片 [1] 上顯示，
+ *                                         # 大小為 [0,0,100,100] 的窗口光標。
  *
  * 利用規約：
  *  不需要作者許可，可以進行修改和二次發布。
@@ -229,6 +252,7 @@
         return parameter;
     };
     var textDecParam          = createPluginParameter('TextDecoration');
+    var param                 = createPluginParameter('DTextPicture');
 
     //=============================================================================
     // Game_Interpreter
@@ -277,6 +301,21 @@
                         $gameScreen.dWindowFrame = getArgBoolean(args[1]);
                         break;
                 }
+                break;
+            case 'D_TEXT_WINDOW_CURSOR' :
+                var windowRect = null;
+                if (getArgBoolean(args[1])) {
+                    windowRect = {
+                        x     : getArgNumber(args[3] || '', 0),
+                        y     : getArgNumber(args[4] || '', 0),
+                        width : getArgNumber(args[5] || '', 0),
+                        height: getArgNumber(args[6] || '', 0)
+                    };
+                }
+                $gameScreen.setDTextWindowCursor(getArgNumber(args[0], 0), windowRect);
+                break;
+            case 'D_TEXT_WINDOW_CURSOR_ACTIVE' :
+                $gameScreen.setDTextWindowCursorActive(getArgNumber(args[0], 0), getArgBoolean(args[1]));
                 break;
         }
     };
@@ -339,6 +378,21 @@
         this.dTextValue      = (this.dTextValue || '') + getArgString(value, false) + '\n';
         this.dTextOriginal   = (this.dTextOriginal || '') + value + '\n';
         this.dTextSize       = size;
+    };
+
+    Game_Screen.prototype.setDTextWindowCursor = function(pictureId, rect) {
+        var picture = this.picture(pictureId);
+        if (picture) {
+            picture.setWindowCursor(rect);
+            picture.setWindowCursorActive(true);
+        }
+    };
+
+    Game_Screen.prototype.setDTextWindowCursorActive = function(pictureId, value) {
+        var picture = this.picture(pictureId);
+        if (picture) {
+            picture.setWindowCursorActive(value);
+        }
     };
 
     Game_Screen.prototype.getDTextPictureInfo = function() {
@@ -412,6 +466,22 @@
         }, this);
     };
 
+    Game_Picture.prototype.setWindowCursor = function(rect) {
+        this._windowCursor = rect;
+    };
+
+    Game_Picture.prototype.getWindowCursor = function() {
+        return this._windowCursor;
+    };
+
+    Game_Picture.prototype.setWindowCursorActive = function(value) {
+        this._windowCursorActive = value;
+    };
+
+    Game_Picture.prototype.getWindowCursorActive = function() {
+        return this._windowCursorActive;
+    };
+
     //=============================================================================
     // SceneManager
     //  文字描画用の隠しウィンドウを取得します。
@@ -439,25 +509,36 @@
         }.bind(this));
         text = text.replace(/\x1bITEM\[(\d+)]/gi, function() {
             var item = $dataItems[getArgNumber(arguments[1], 1, $dataItems.length)];
-            return item ? '\x1bi[' + item.iconIndex + ']' + item.name : '';
+            return this.getItemInfoText(item);
         }.bind(this));
         text = text.replace(/\x1bWEAPON\[(\d+)]/gi, function() {
             var item = $dataWeapons[getArgNumber(arguments[1], 1, $dataWeapons.length)];
-            return item ? '\x1bi[' + item.iconIndex + ']' + item.name : '';
+            return this.getItemInfoText(item);
         }.bind(this));
         text = text.replace(/\x1bARMOR\[(\d+)]/gi, function() {
             var item = $dataArmors[getArgNumber(arguments[1], 1, $dataArmors.length)];
-            return item ? '\x1bi[' + item.iconIndex + ']' + item.name : '';
+            return this.getItemInfoText(item);
         }.bind(this));
         text = text.replace(/\x1bSKILL\[(\d+)]/gi, function() {
             var item = $dataSkills[getArgNumber(arguments[1], 1, $dataSkills.length)];
-            return item ? '\x1bi[' + item.iconIndex + ']' + item.name : '';
+            return this.getItemInfoText(item);
         }.bind(this));
         text = text.replace(/\x1bSTATE\[(\d+)]/gi, function() {
             var item = $dataStates[getArgNumber(arguments[1], 1, $dataStates.length)];
-            return item ? '\x1bi[' + item.iconIndex + ']' + item.name : '';
+            return this.getItemInfoText(item);
         }.bind(this));
         return text;
+    };
+
+    Window_Base.prototype.getItemInfoText = function(item) {
+        if (!item) {
+            return '';
+        }
+        return (this.isValidDTextIconSwitch() ? '\x1bi[' + item.iconIndex + ']' : '') + item.name;
+    };
+
+    Window_Base.prototype.isValidDTextIconSwitch = function() {
+        return !param.itemIconSwitchId || $gameSwitches.value(param.itemIconSwitchId);
     };
 
     Window_Base.prototype.getVariablePadZero = function(value, digit) {
@@ -490,6 +571,23 @@
         }
         if (Graphics.frameCount % 2 === 0) {
             this.adjustScaleFrameWindow();
+        }
+        this.updateFrameWindowCursor();
+    };
+
+    Sprite_Picture.prototype.updateFrameWindowCursor = function() {
+        var picture = this.picture();
+        if (!picture) {
+            return;
+        }
+        var rect = picture.getWindowCursor();
+        if (rect) {
+            var width  = rect.width || this._frameWindow.contentsWidth();
+            var height = rect.width || this._frameWindow.contentsHeight();
+            this._frameWindow.setCursorRect(0, 0, width, height);
+            this._frameWindow.active = picture.getWindowCursorActive();
+        } else {
+            this._frameWindow.setCursorRect(0, 0, 0, 0);
         }
     };
 
@@ -542,9 +640,9 @@
         this.bitmap.fontFace = this.hiddenWindow.contents.fontFace;
         if (this.dTextInfo.color) {
             this.bitmap.fillAll(this.dTextInfo.color);
-            var h              = this.bitmap.height;
-            var w              = this.bitmap.width;
-            var gradationLeft  = this.dTextInfo.gradationLeft;
+            var h             = this.bitmap.height;
+            var w             = this.bitmap.width;
+            var gradationLeft = this.dTextInfo.gradationLeft;
             if (gradationLeft > 0) {
                 this.bitmap.clearRect(0, 0, gradationLeft, h);
                 this.bitmap.gradientFillRect(0, 0, gradationLeft, h, 'rgba(0, 0, 0, 0)', this.dTextInfo.color, false);
