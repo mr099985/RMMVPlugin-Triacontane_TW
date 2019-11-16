@@ -17,7 +17,7 @@
 //=============================================================================
 
 /*:
- * @plugindesc 簡單語音插件
+ * @plugindesc [ ver.1.1.0 ]簡單語音
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param FolderName
@@ -27,9 +27,9 @@
  * @default voice
  *
  * @param OptionName
- * @text 設置項目名稱
+ * @text 設定項目名稱
  * @type string
- * @desc 選項畫面上顯示的語音音量的設定項目名稱。
+ * @desc 選項畫面上顯示語音音量的設定項目名稱。
  * @default ボイス 音量
  *
  * @param OptionValue
