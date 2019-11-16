@@ -30,7 +30,7 @@
  * @text 設定項目名稱
  * @type string
  * @desc 選項畫面上顯示語音音量的設定項目名稱。
- * @default ボイス 音量
+ * @default 語音音量
  *
  * @param OptionValue
  * @text 預設音量
