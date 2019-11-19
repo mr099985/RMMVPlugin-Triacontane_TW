@@ -16,7 +16,7 @@
 // [GitHub] : https://github.com/triacontane/
 //=============================================================================
 /*:
- * @plugindesc 最大存檔數量變更插件
+ * @plugindesc [ ver.1.1.1 ]最大存檔數量變更
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param SaveFileNumber
