@@ -15,18 +15,19 @@
 //=============================================================================
 
 /*:
- * @plugindesc 氣泡圖標播放SE插件
+ * @plugindesc [ ver.1.0.0 ]顯示氣泡圖標時播放音效
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param SwitchId
  * @text 有效的開關ID
- * @desc 是否開啟插件功能的開關ID。0的話無條件播放SE。
+ * @desc 是否開啟插件功能的開關ID。0 的話無條件播放音效。
  * @default 0
  * @type switch
  *
  * @param SeInfo
  * @text 效果音
- * @desc 氣泡圖標顯示時播放的效果音。給氣泡圖標選擇對應的效果音。
+ * @desc 氣泡圖標顯示時播放的音效。
+ * 給氣泡圖標選擇對應的音效。
  * @default
  * @type struct<SE>[]
  *
@@ -45,8 +46,8 @@
  *
  * @param Balloon
  * @text 氣泡圖標
- * @desc 播放SE的目標氣泡圖標
- * (1:驚嘆號 2:問號 3:樂符 4:心形 5:憤怒....)
+ * @desc 目標氣泡圖標指定的播放音效
+ * (1 : 驚嘆號 2 : 問號 3 : 樂符 4 : 心形 5 : 憤怒....)
  * @default 1
  * @type select
  * @option 驚嘆號
@@ -69,20 +70,20 @@
  * @value 9
  * @option Zzz
  * @value 10
- * @option 用戶定義1
+ * @option 使用者自訂 1
  * @value 11
- * @option 用戶定義2
+ * @option 使用者自訂 2
  * @value 12
- * @option 用戶定義3
+ * @option 使用者自訂 3
  * @value 13
- * @option 用戶定義4
+ * @option 使用者自訂 4
  * @value 14
- * @option 用戶定義5
+ * @option 使用者自訂 5
  * @value 15
  *
  * @param name
  * @text 音效檔案名稱
- * @desc 的文件檔案名稱
+ * @desc 播放的檔案名稱
  * @require 1
  * @dir audio/se/
  * @type file
