@@ -16,7 +16,7 @@
 // [GitHub] : https://github.com/triacontane/
 //=============================================================================
 /*:ja
- * @plugindesc 觸碰映射模式更改插件
+ * @plugindesc [ ver1.1.0 ]觸碰反應模式更改
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param initPolicyLevel
