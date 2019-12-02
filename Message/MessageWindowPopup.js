@@ -95,39 +95,39 @@
 // [GitHub] : https://github.com/triacontane/
 //=============================================================================
 /*:
- * @plugindesc [ ver.2.14.5 ]氣泡式對話窗口
+ * @plugindesc [ ver.2.14.5 ] 氣泡式對話框視窗
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param FontSize
  * @text 字體大小
- * @desc 氣泡呼出窗口的預設文字大小
- * 通常窗口的文字大小：28
+ * @desc 氣泡式對話框視窗的預設文字大小
+ * 通常視窗的文字大小：28
  * @default 22
  * @type number
  *
  * @param Padding
  * @text 留白
- * @desc 氣泡呼出窗口的留白大小
- * 通常窗口的留白：18
+ * @desc 氣泡式對話框視窗的留白大小
+ * 通常視窗的留白：18
  * @default 10
  * @type number
  *
  * @param AutoPopup
- * @text 是否自動啟用氣泡窗口
- * @desc 自動在事件中啟用氣泡呼出窗口。（ON/OFF）
- * OFF的情況為原始訊息窗口。
+ * @text 是否自動啟用氣泡式視窗
+ * @desc 自動在事件中使用氣泡式視窗。（ON/OFF）
+ * OFF 的情況為一般對話框視窗。
  * @default true
  * @type boolean
  *
  * @param FaceScale
- * @text 臉圖縮放比例
- * @desc 氣泡呼出窗口的臉圖縮放大小(1-100%)
+ * @text 頭像縮放比例
+ * @desc 氣泡式視窗的頭像縮放大小(1-100%)
  * @default 75
  * @type number
  *
  * @param WindowLinkage
- * @text 輸入窗口連動
- * @desc 將選擇窗口和數字輸入窗口跟氣泡呼出窗口連動。(ON/OFF)
+ * @text 輸入視窗連動
+ * @desc 將選擇視窗和數字輸入視窗跟氣泡式視窗連動。(ON/OFF)
  * @default true
  * @type boolean
  *
@@ -139,86 +139,91 @@
  *
  * @param ThroughWindow
  * @text 重疊是否透明
- * @desc 窗口重疊時透明顯示。(ON/OFF)
- * 選擇項於氣泡呼出窗口內顯示的場合請設定為ON。。
+ * @desc 視窗重疊時透明顯示。(ON/OFF)
+ * 選擇項於氣泡式視窗內顯示的場合請設定為ON。
  * @default false
  * @type boolean
  *
  * @param FontSizeRange
  * @text 字體大小範圍
- * @desc 氣泡呼出窗口的控制字元「\{」「\}」使用時增減文字大小的幅度。預設為 12 。
+ * @desc 氣泡式視窗的控制字元「\{」「\}」使用時增減字體大小的幅度。
+ * 預設為 12 。
  * @default 12
  * @type number
  *
  * @param FontUpperLimit
  * @text 字體大小上限
- * @desc 氣泡呼出窗口的控制字元「\{」「\}」使用時文字最大上限。預設為 96。
+ * @desc 氣泡式視窗的控制字元「\{」「\}」使用時字體最大上限。
+ * 預設為 96。
  * @default 96
  * @type number
  *
  * @param FontLowerLimit
  * @text 字體大小下限
- * @desc 氣泡呼出窗口的控制字元「\{」「\}」使用時文字最大下限。預設為 12。
+ * @desc 氣泡式視窗的控制字元「\{」「\}」使用時字體最大下限。
+ * 預設為 12。
  * @default 24
  * @type number
  *
  * @param InnerScreen
  * @text 是否自適應
- * @desc 調整位置，使氣球呼出窗口在水平方向，垂直方向上都自適應畫面。
+ * @desc 調整位置，使氣泡式視窗在水平、垂直方向都自適應畫面。
  * @default false
  * @type boolean
  *
  * @param ShakeSpeed
  * @text 震動速度
- * @desc 窗口震動時的速度。可以利用控制字元\v[n]控制。
+ * @desc 視窗震動時的速度。可以利用控制字元\v[n]控制。
  * @default 5
  * @type number
  *
  * @param ShakeDuration
  * @text 震動時間
- * @desc 窗口震動的時間。可以利用控制字元\v[n]控制。指定 0 的情況始終保持振動。
+ * @desc 視窗震動的時間。可以利用控制字元\v[n]控制。
+ * 指定 0 的情況始終保持振動。
  * @default 60
  * @type number
  *
  * @param NoUseTail
  * @text 禁用暫停圖示顯示結尾
- * @desc 禁用暫停圖示的顯示訊息結尾功能。顯示在預設位置。
+ * @desc 禁用暫停圖示的顯示訊息結尾功能。
+ * 顯示在預設位置。
  * @default false
  * @type boolean
  *
  * @param MinWidthVariableId
- * @text 指定最小寬度變數ID
- * @desc 指定的變數ID值，控制氣球窗口的最小寬度（單位 : px）。
+ * @text 指定最小寬度變數 ID
+ * @desc 指定的變數 ID ，控制氣泡式視窗的最小寬度（單位 : px）。
  * @default 0
  * @type variable
  *
  * @param MinHeightVariableId
- * @text 指定最小高度變數ID
- * @desc 指定的變數ID值，控制氣球窗口的最小高度（單位 : px）。
+ * @text 指定最小高度變數 ID
+ * @desc 指定的變數 ID，控制氣泡式視窗的最小高度（單位 : px）。
  * @default 0
  * @type variable
  *
  * @param lowerLimitX
  * @text 下限 X 座標
- * @desc 氣泡呼出窗口的下限 X 座標。
+ * @desc 氣泡式視窗的下限 X 座標。
  * @default 0
  * @type number
  *
  * @param upperLimitX
  * @text 上限 X 座標
- * @desc 氣泡呼出窗口的上限 X 座標。
+ * @desc 氣泡式視窗的上限 X 座標。
  * @default 0
  * @type number
  *
  * @param lowerLimitY
  * @text 下限 Y 座標
- * @desc 氣泡呼出窗口的下限 Y 座標。
+ * @desc 氣泡式視窗的下限 Y 座標。
  * @default 0
  * @type number
  *
  * @param upperLimitY
  * @text 上限 Y 座標
- * @desc 氣泡呼出窗口的上限 Y 座標。
+ * @desc 氣泡式視窗的上限 Y 座標。
  * @default 0
  * @type number
  *
@@ -238,126 +243,126 @@
  * @min -2000
  * @max 2000
  *
- * @help 訊息窗口變更為氣泡呼出窗口，並顯示於指定角色上方。
+ * @help 訊息視窗變更為氣泡式視窗，並顯示於指定角色上方。
  *
  * 與 YEP_MessageCore.js 併用的情況，
  * 此插件配置 YEP_MessageCore.js 在下方。
  *
- * 另外，併用 FTKR_ExMessageWindow2.js 的複數窗口表示，
+ * 另外，併用 FTKR_ExMessageWindow2.js 的複數視窗表示，
  * 此插件配置 FTKR_ExMessageWindow2.js 在下方。
  *
  * 插件參數[AutoPopup]
  * 與 FTKR_ExMessageWindow2.js 併用的情況。
- * 用於自動設置的消息窗口是窗口ID 0。
- * 當它為OFF時，窗口ID 0 返回到一般顯示方法。
+ * 用於自動設置的對話框視窗是視窗 ID 0。
+ * 當它為 OFF 時，視窗 ID 0 返回到一般顯示方法。
  *
  * 詳細插件命令
  *  從事件命令中使用「插件命令」執行。
  *  （參數間使用半形空格區分）
  *
- * MWP_VALID [角色ID] [窗口位置]
- * 　訊息窗口顯示於指定角色ID上方。
+ * MWP_VALID [角色 ID ] [視窗位置]
+ * 　訊息視窗顯示於指定角色 ID 上方。
  * 　玩家 : -1 本事件 : 0 指定事件ID : 1...
  * 　跟隨隊友 : -2, -3, -4
  *
- * 　窗口位置指定
+ * 　視窗位置指定
  *   0 : 自動（包含未指定的情況）
  *   1 : 顯示於角色上方
  *   2 : 顯示於角色下方
  *
  * 範例：MWP_VALID 0 1
  *
- * MWP_VALID [事件名] [窗口位置]
- * 　訊息窗口會顯示在與事件名一致的事件上方。
+ * MWP_VALID [事件名] [視窗位置]
+ * 　對話框視窗會顯示在與事件名一致的事件上方。
  *
  * 範例：MWP_VALID test_event 1
  *
- * ！複數訊息窗口顯示使用的情況！
- * MWP_VALID [角色ID] [窗口ID] [窗口位置]
- * 　指定的訊息窗口 ID 將顯示於指定角色 ID 的上方
- * 　玩家 : -1 本事件 : 0 指定事件ID : 1 ～
+ * ！複數訊息視窗顯示使用的情況！
+ * MWP_VALID [角色ID] [視窗ID] [視窗位置]
+ * 　指定的訊息視窗 ID 將顯示於指定角色 ID 的上方
+ * 　玩家 : -1 本事件 : 0 指定事件 ID : 1 ～
  * 　跟隨隊友 : -2, -3, -4
- * 　未指定窗口ID的情況，將使用窗口 ID 0。
+ * 　未指定視窗ID的情況，將使用視窗 ID 0。
  *
  * 範例：MWP_VALID 0 1
  *
  * MWP_INVALID
- * 　訊息窗口顯示恢復預設訊息窗口
+ * 　氣泡式視窗恢復預設對話框視窗
  *
  * 範例：MWP_INVALID
  *
- * ！複數訊息窗口顯示使用的情況！
- * MWP_INVALID [窗口ID]
- * 　指定的訊息窗口ID將返回預設顯示訊息窗口。
- * 　未指定的訊息窗口ID，將全部訊息窗口返回預設顯示訊息窗口。
+ * ！複數訊息視窗顯示使用的情況！
+ * MWP_INVALID [視窗 ID ]
+ * 　指定的氣泡式視窗 ID 將返回預設對話框視窗。
+ * 　未指定氣泡式視窗的 ID，會將全部的氣泡式視窗恢復預設對話框視窗。
  *
  * 範例：MWP_INVALID 1
  *
  * MWP_FREE 100 200
- * 在任意指定位置顯示氣泡呼出窗口。
+ * 在任意指定位置顯示氣泡式視窗。
  *
  * MWP_SETTING [設定内容]
- * 　設置氣球呼出窗口。在設定內容中輸入以下內容。
+ * 　設定氣泡式視窗。在設定內容中輸入以下內容。
  *
  *   POS_UPPER
- * 　　窗口位置固定在角色上方。
+ * 　　視窗位置固定在角色上方。
  *
  *   POS_UPPER 1
- * 　　僅固定事件ID[1]窗口位置顯示於角色上方。
+ * 　　僅固定事件 ID [1] 視窗位置顯示於角色上方。
  *
  *   POS_UPPER aaa
- * 　　僅固定事件名[aaa]窗口位置顯示於角色上方。
+ * 　　僅固定事件名 [aaa] 視窗位置顯示於角色上方。
  *
  *   POS_LOWER
- * 　　窗口位置固定在角色下方。
+ * 　　視窗位置固定在角色下方。
  *
  *   POS_LOWER -1
- * 　　僅將玩家的窗口位置固定在角色下方。
+ * 　　僅將玩家的視窗位置固定在角色下方。
  *
  *   POS_LOWER aaa
- * 　　僅固定事件名[aaa]窗口位置顯示於角色下方。
+ * 　　僅固定事件名 [aaa] 視窗位置顯示於角色下方。
  *
  *   POS_AUTO
- * 　　通常顯示在角色上方，只有在會切到窗口時才顯示在下方。
+ * 　　通常顯示在角色上方，只有在切到視窗時才顯示在下方。
  *
- *   SKIN[放置在 /img/system/ 內的Window文件名]
- *     氣泡呼出窗口時專用的窗口樣式。
+ *   SKIN[放置在 /img/system/ 內的 Window 檔案名]
+ *     氣泡式視窗時專用的視窗樣式。
  *
  *   SUB_POS_PLAYER
- *     將選擇項以及數值輸入的窗口顯示在玩家的頭頂上。因為位置關係，
- *     有時會出現窗口重疊的情況，因此根據需要，請啟用ThroughWindow的參數。
+ *     將選擇項以及數值輸入的視窗顯示在玩家的頭頂上。因為位置關係，
+ *     有時會出現視窗重疊，因此根據需要，請使用「重疊是否透明」參數。
  *
  *   SUB_POS_INNER
- *     在消息窗口中包含選項和數字輸入窗口。
- *     使用此設置時，請務必啟用 ThroughWindow 。
+ *     在氣泡式視窗中包含選項和數字輸入視窗。
+ *     使用此設置時，請務必使用「重疊是否透明」。
  *
  *   SUB_POS_NORMAL
- *   　在氣球呼出窗口下顯示選項和數字輸入窗口。
- *     在不更改設置時進行此設置。
+ *   　在氣泡式視窗下顯示選項和數字輸入視窗。
+ *     在不更改設訂時進行此設定。
  *
  *   SUB_POS_RIGHT
- *   　在氣球呼出窗口右側顯示選項和數字輸入窗口。
+ *   　在氣泡式視窗右側顯示選項和數字輸入視窗。
  *
  * 範例：MWP_SETTING POS_UPPER
  * 　　  MWP_SETTING SKIN window2
  *
  * MWP_ADJUST [設定内容]
- * 　顯示氣泡呼出窗口的微校正，請在設定內容中輸入以下內容。
+ * 　顯示氣泡式視窗的校正，請在設定內容中輸入以下內容。
  *
  * 　POS [X座標] [Y座標]
- * 　　校正窗口的 X 座標與 Y 座標。指定的話會由原座標進行相對校正。
+ * 　　校正視窗的 X 座標與 Y 座標。指定的話會由原座標進行相對校正。
  *
  * 　SIZE [寬] [高]
- * 　　校正窗口的寬與高。指定的話會由原窗口大小進行相對校正。
+ * 　　校正視窗的寬與高。指定的話會由原視窗大小進行相對校正。
  *
  * 範例：MWP_ADJUST POS 5 -3
  *
- * ！複數訊息窗口顯示使用的情況！
- *   氣球呼出窗口的設置，顯示位置和調整大小的結果對於
- *   所有窗口ID是共同的。
+ * ！複數對話框視窗顯示使用的情況！
+ *   氣泡式視窗的設定（校正），顯示位置和調整大小的結果對於
+ *   所有 ID 的視窗是相同的。
  *
  * ・可以使用的控制字元
- * \sh[5] # 指定強度[5]的窗口震動
+ * \sh[5] # 指定強度[5]的視窗震動
  *
  * 利用規約：
  *  不需要作者許可，可以進行修改和二次發布。
