@@ -27,17 +27,17 @@
 //=============================================================================
 
 /*:
- * @plugindesc [ ver.2.0.0 ]追加開始遊戲選項插件
+ * @plugindesc [ ver.2.0.0  ] 追加另一個開始遊戲
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param name
  * @text 命令名稱
  * @desc 顯示在標題畫面上的命令名稱。
- * @default Another New Game
+ * @default 特典
  *
  * @param map_id
- * @text 地圖ID
- * @desc 目標地圖ID。
+ * @text 地圖 ID
+ * @desc 目標地圖 ID。
  * @default 1
  * @type number
  *
@@ -105,8 +105,8 @@
  * @default 0
  * @type switch
  *
- * @help 將添加新遊戲選項到標題畫面窗口。
- * 如果選擇這個選項，將直接從指定目標地圖開始新遊戲，與原本開始遊戲可分開。
+ * @help 將添加另一個開始遊戲到標題畫面命令視窗。
+ * 如果選擇這個選項，將直接從指定目標地圖開始遊戲，與原本的開始遊戲可以分開。
  * 可製作特典和 CG 回憶模式、素材註記、迷你游戲、隱藏元素等額外要素。
  * 根據作者的需求，可用於各種用途。
  *
@@ -117,10 +117,10 @@
  * 插件命令詳細訊息
  *   從事件中的「插件命令」執行。
  *
- *  ANG_VISIBLE  # 顯示添加的新遊戲選項。
- *  ANG_ENABLE   # 使添加的新遊戲選項可以選擇。
- *  ANG_HIDDEN   # 隱藏添加的新遊戲選項。
- *  ANG_DISABLE  # 禁用選擇添加的新遊戲選項。
+ *  ANG_VISIBLE  # 顯示另一個開始遊戲。
+ *  ANG_ENABLE   # 讓另一個開始遊戲可以選擇。
+ *  ANG_HIDDEN   # 隱藏另一個開始遊戲。
+ *  ANG_DISABLE  # 禁止選擇另一個開始遊戲。
  *  ANG_NEWGAME_HIDDEN  # 隱藏原本的開始遊戲。
  *  ANG_NEWGAME_VISIBLE # 顯示原本的開始遊戲。
  *
