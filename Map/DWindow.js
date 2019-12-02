@@ -21,59 +21,65 @@
 // [GitHub] : https://github.com/triacontane/
 //=============================================================================
 /*:
- * @plugindesc [ ver.1.3.3 ]產生動態窗口
+ * @plugindesc [ ver.1.3.3 ] 產生動態視窗
  * @author トリアコンタン( 翻譯 : ReIris )
  *
  * @param GameVariablesXPos
- * @desc 儲存 X 座標的遊戲變數ID
+ * @text 儲存 X 座標變數 ID
+ * @desc 儲存 X 座標的遊戲變數 ID。
  * @default 1
  *
  * @param GameVariablesYPos
- * @desc 儲存 Y 座標的遊戲變數ID
+ * @text 儲存 Y 座標變數 ID
+ * @desc 儲存 Y 座標的遊戲變數 ID。
  * @default 2
  *
  * @param GameVariablesWidth
- * @desc 儲存窗口寬度的遊戲變數ID
+ * @text 儲存視窗寬度變數 ID
+ * @desc 儲存視窗寬度的遊戲變數 ID。
  * @default 3
  *
  * @param GameVariablesHeight
- * @desc 儲存窗口高度的遊戲變數ID
+ * @text 儲存視窗高度變數 ID
+ * @desc 儲存視窗高度的遊戲變數 ID。
  * @default 4
  *
  * @param AlwaysOnTop
- * @desc 窗口是否顯示最前
+ * @text 始終最前
+ * @desc 視窗是否始終顯示在最前面。
  * @default OFF
  *
  * @param IncludePicture
- * @desc 如果想要在圖片中夾帶窗口，請指定圖片編號作為標準值。
+ * @text 追加圖片
+ * @desc 如果想要在圖片中夾帶視窗，請指定圖片編號作為標準值。
  * @default 0
  *
- * @help 在畫面上的指定位置顯示一個空窗口。
- * 最多可以指定顯示 10 個窗口。
+ * @help 在畫面上的指定位置顯示一個空視窗。
+ * 最多可以指定顯示 10 個視窗。
  * 顯示坐標預先儲存在遊戲變數 ID 中，或者在執行插件命令時直接指定。
  * 使用它來創造一個不足以使用插件的自製系統。
  * 它不能顯示文字。要顯示文字請使用 DTextPicture.js。
  *
- * 如果為「IncludePicture」指定圖片編號，
- * 則窗口將顯示在帶有該編號的圖片上方，
+ * 如果為「追加圖片」指定圖片編號，
+ * 則視窗將顯示在帶有該編號的圖片上方，
  * 並顯示在該編號上方的圖片下方。
  *
  * 插件命令
  *   從事件命令中「插件命令」執行。
  *   （參數間使用半形空格區分）
  *
- *  D_WINDOW_DRAW [窗口ID] [不透明度] : 顯示窗口
+ *  D_WINDOW_DRAW [視窗 ID] [不透明度] : 顯示視窗
  *  範例 1 (座標指定為變數)：D_WINDOW_DRAW 1 255
  *  範例 2 (座標直接指定)：D_WINDOW_DRAW 1 20 20 320 80 255
- *  ※ 請為窗口 ID 指定 1 到 10 之間的值。
+ *  ※ 請為視窗 ID 指定 1 到 10 之間的值。
  *  指定的最後一個值是不透明度（0-255）。
  *
- *  D_WINDOW_ERASE [窗口ID] : 窗口消除
+ *  D_WINDOW_ERASE [視窗 ID] : 視窗消除
  *  例：D_WINDOW_ERASE 1
- *  ※ 請為窗口 ID 指定 1 到 10 之間的值。
+ *  ※ 請為視窗 ID 指定 1 到 10 之間的值。
  *
- *  D_WINDOW_OPACITY [窗口ID] [不透明度] [時間(f)]
- *  在指定時間內更改已顯示窗口的不透明度。
+ *  D_WINDOW_OPACITY [視窗 ID] [不透明度] [時間(幀數)]
+ *  在指定時間內更改已顯示視窗的不透明度。
  *
  * 利用規約：
  *  不需要作者許可，可以進行修改和二次發布。
