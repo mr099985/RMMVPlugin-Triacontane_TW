@@ -16,37 +16,39 @@
 //=============================================================================
 
 /*:
- * @plugindesc [ ver.1.1.0 ]說明擴張插件
+ * @plugindesc [ ver.1.1.0 ] 說明視窗功能擴張
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param swapDescription
  * @text 是否更換說明
  * @desc 忽視原本的說明文替換成注釋裡填寫的說明。
- * 設定為false的情況會在下一行出現原本的說明文。
+ * 設定為 false 的情況會在下一行出現原本的說明文。
  * @default true
  * @type boolean
  *
  * @param helpLines
  * @text 幫助窗口行數
- * @desc 要變更幫助窗口高度的話請指定數值。0 的情況什麼都不會發生。
+ * @desc 要變更幫助窗口高度的話請指定數值。
+ * 0 的情況什麼都不會發生。
  * @default 0
  * @type number
  *
  * @param validSwitch
- * @text 有效開關
- * @desc 指定變數ID為ON時此插件有效。0 的情況為常時有效。
+ * @text 有效開關 ID
+ * @desc 指定變數 ID 為 ON 時此插件有效。
+ * 0 的情況為常時有效。
  * @default 0
  * @type switch
  *
  * @param notePrefix
- * @text 注釋欄前綴
- * @desc 在命名其他插件備註字段或插件命令時指定的前綴。
+ * @text 注釋欄前置
+ * @desc 在命名其他插件注釋欄或插件命令時指定的前置。
  * 通常不需要指定它。
  * @default
  *
  * @help DescriptionExtend.js
  *
- * 幫助窗口的說明擴張。能夠顯示 3 行以上的說明。
+ * 幫助視窗的說明擴張。能夠顯示 3 行以上的說明。
  * 請在注釋欄添加以下說明。
  * <ExtendDesc:aaa> // [aaa]的內容追加。
  *
