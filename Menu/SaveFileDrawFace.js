@@ -2,7 +2,6 @@
 // SaveFileDrawFace.js
 // ----------------------------------------------------------------------------
 // Copyright (c) 2015-2017 Triacontane
-// Translator : ReIris
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
 // ----------------------------------------------------------------------------
@@ -17,18 +16,18 @@
 //=============================================================================
 
 /*:
- * @plugindesc [ ver.1.1.1 ]存檔顯示角色頭像
+ * @plugindesc [ ver.1.1.1 ] 存檔畫面顯示頭像
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param VisibleItems
  * @text 顯示行數
- * @desc 可以在存檔窗口中顯示的行數。
- * 在默認窗口尺寸的情況下，3 就可以了。
+ * @desc 可以在存檔視窗中顯示的行數。
+ * 在默認視窗尺寸的情況下，3 就可以了。
  * @default 3
  *
  * @param ShowMapName
  * @text 是否顯示地圖名稱
- * @desc 存檔窗口右上顯示地圖名稱。
+ * @desc 存檔視窗右上顯示地圖名稱。
  * （不會應用在插件之前已保存的檔案中）
  * @default OFF
  *
@@ -37,7 +36,7 @@
  * @desc 隱藏顯示遊戲標題的部分。(ON/OFF)
  * @default OFF
  *
- * @help 在存檔窗口中使用頭像替換行走圖。
+ * @help 在存檔視窗中使用頭像替換行走圖。
  *
  * 這個插件沒有插件命令。
  *
