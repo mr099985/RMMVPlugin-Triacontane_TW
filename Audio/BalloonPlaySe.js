@@ -15,17 +15,18 @@
 //=============================================================================
 
 /*:
- * @plugindesc [ ver.1.0.0 ]顯示氣泡圖標時播放音效
+ * @plugindesc [ ver.1.0.0 ] 顯示氣泡圖標時播放音效
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param SwitchId
  * @text 有效的開關ID
- * @desc 是否開啟插件功能的開關ID。0 的話無條件播放音效。
+ * @desc 是否開啟插件功能的開關ID。
+ * 0 的話無條件播放音效。
  * @default 0
  * @type switch
  *
  * @param SeInfo
- * @text 效果音
+ * @text 音效
  * @desc 氣泡圖標顯示時播放的音效。
  * 給氣泡圖標選擇對應的音效。
  * @default
@@ -46,7 +47,7 @@
  *
  * @param Balloon
  * @text 氣泡圖標
- * @desc 目標氣泡圖標指定的播放音效
+ * @desc 指定目標氣泡圖標播放時的音效。
  * (1 : 驚嘆號 2 : 問號 3 : 樂符 4 : 心形 5 : 憤怒....)
  * @default 1
  * @type select
@@ -82,8 +83,8 @@
  * @value 15
  *
  * @param name
- * @text 音效檔案名稱
- * @desc 播放的檔案名稱
+ * @text 音效名稱
+ * @desc 播放的檔案名稱。
  * @require 1
  * @dir audio/se/
  * @type file
@@ -91,7 +92,7 @@
  *
  * @param volume
  * @text 音量
- * @desc 音量大小
+ * @desc 音量大小。
  * @type number
  * @default 90
  * @min 0
@@ -99,15 +100,15 @@
  *
  * @param pitch
  * @text 音調
- * @desc 音調高低
+ * @desc 音調高低。
  * @type number
  * @default 100
  * @min 50
  * @max 150
  *
  * @param pan
- * @text 移動聲道
- * @desc 音效左右移動聲道
+ * @text 左右聲道
+ * @desc 左右移動聲道。
  * @type number
  * @default 0
  * @min -100
