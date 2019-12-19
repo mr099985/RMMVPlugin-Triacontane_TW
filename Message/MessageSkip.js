@@ -1,12 +1,12 @@
 //=============================================================================
 // MessageSkip.js
 // ----------------------------------------------------------------------------
-// Copyright (c) 2015 Triacontane
-// Translator : ReIris
+// (C) 2016 Triacontane
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
 // ----------------------------------------------------------------------------
 // Version
+// 1.12.0 2019/05/26 オート、スキップアイコンの位置を自由に指定できる機能を追加
 // 1.11.0 2018/06/16 オート及びスキップの機能を一時的に無効化するスイッチを追加
 // 1.10.1 2018/05/07 オートモードで途中に「\!」が含まれる場合の待機フレームが正しく計算されない問題を修正
 // 1.10.0 2018/05/01 スキップモードとオートモードをスイッチで自動制御できる機能を追加
@@ -31,15 +31,14 @@
 // [Twitter]: https://twitter.com/triacontane/
 // [GitHub] : https://github.com/triacontane/
 //=============================================================================
-
 /*:
- * @plugindesc 訊息播放快進插件
+ * @plugindesc [ ver.1.12.0 ] 對話快進播放或自動播放
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
- * @param SkipKey
+ * @param スキップキー
  * @text 快進按鍵
  * @desc 訊息快進的按鍵。
- * (按鍵的順序/shift/control/tab)
+ * ( 按鍵的順序 / shift / control / tab )
  * @default S
  * @type select
  * @option shift
@@ -47,10 +46,10 @@
  * @option tab
  * @option S
  *
- * @param AutoKey
+ * @param オートキー
  * @text 自動播放按鍵
  * @desc 訊息自動播放的按鍵。
- * (按鍵的順序/shift/control/tab)
+ * ( 按鍵的順序 / shift / control / tab )
  * @default A
  * @type select
  * @option shift
@@ -58,58 +57,77 @@
  * @option tab
  * @option A
  *
- * @param SkipSwitchId
+ * @param スキップスイッチ
  * @text 快進開關
- * @desc 當指定開關ID為ON時始終快進。
+ * @desc 當指定開關 ID 為 ON 時始終快進。
  * @default 0
  * @type switch
  *
- * @param AutoSwitchIId
+ * @param オートスイッチ
  * @text 自動播放開關
- * @desc 當指定開關ID為ON時始終自動。快進優先於自動。
+ * @desc 當指定開關 ID 為 ON 時始終自動。快進優先於自動。
  * @default 0
  * @type switch
  *
- * @param SkipIcon
+ * @param スキップアイコン
  * @text 快進圖標
- * @desc 訊息快進中窗口右下表示的圖示。
+ * @desc 訊息快進中對話框右下表示的圖示。
  * @default 140
  * @type number
  *
- * @param AutoIcon
+ * @param オートアイコン
  * @text 自動播放圖標
- * @desc 訊息自動播放中窗口右下表示的圖示。
+ * @desc 訊息自動播放中對話框右下表示的圖示。
  * @default 75
  * @type number
  *
- * @param PressingSkip
+ * @param アイコンX
+ * @text 圖標 X 座標
+ * @desc 更改自動播放和快進圖標位置時指定的 X 座標。
+ * @default 0
+ * @type number
+ * @min -2000
+ * @max 2000
+ *
+ * @param アイコンY
+ * @text 圖標 Y 座標
+ * @desc 更改自動播放和快進圖標位置時指定的 Y 座標。
+ * @default 0
+ * @type number
+ * @min -2000
+ * @max 2000
+ *
+ * @param 押し続けスキップ
  * @text 按下時是否快進
  * @desc 快進的判定為指定按鍵按下的時候。
  * @default false
  * @type boolean
  *
- * @param AutoWaitFrame
+ * @param オート待機フレーム
  * @text 自動播放等待時間
- * @desc 訊息自動播放有效的場合，訊息表示停留的時間。可以使用控制字元\v[n]或計算式來指定。
+ * @desc 訊息自動播放有效的場合，訊息表示停留的時間。
+ * 可以使用控制字元 \v[n] 或計算式來指定。
  * @default 100 + textSize * 10
  *
- * @param ResetOnEndSwitch
+ * @param 終了解除スイッチID
  * @text 解除快進/自動狀態開關
- * @desc 指定的開關ID為ON時，在事件結束時解除快進/自動狀態。0的場合為常時解除。
+ * @desc 指定的開關 ID 為 ON 時，在事件結束時解除快進/自動狀態。
+ * 0 的場合為常時解除。
  * @default 0
  * @type switch
  *
- * @param SkipPicture
- * @text 快進播放按鈕圖片
- * @desc 窗口內表示快進圖片的檔案名稱。點擊時進入快進模式。
+ * @param スキップピクチャ
+ * @text 快進播放圖片
+ * @desc 要在對話框中顯示快進按鈕的圖片。點擊進入快進模式。
  * @default
  * @require 1
  * @dir img/pictures/
  * @type file
  *
- * @param PictureAnchor
+ * @param ボタン原点
  * @text 圖片按鈕座標原點
- * @desc 快進、自動播放訊息圖片按鈕的座標原點。（0:左上、1:右上、2:左下、3:右下）
+ * @desc 快進、自動播放訊息圖片按鈕的座標原點。
+ * （0:左上、1:右上、2:左下、3:右下）
  * @default 0
  * @type select
  * @option 0
@@ -117,70 +135,72 @@
  * @option 2
  * @option 3
  *
- * @param PictureSwitchId
- * @desc 指定的開關ID為ON時，才會顯示快進/自動播放訊息圖片按鈕。0的情況下無條件顯示。
+ * @param ボタン表示スイッチID
+ * @text 圖片開關 ID
+ * @desc 僅當指定的開關 ID 為 ON 時，才顯示快進和自動播放按鈕。
+ * 如果為 0 ，則無條件顯示。
  * @default 0
  * @type switch
  *
- * @param SkipPictureX
- * @text 快進播放按鈕圖片位置 X
- * @desc 窗口內表示快進按鈕的 X 座標。
+ * @param スキップピクチャX
+ * @text 快進播放圖片位置 X
+ * @desc 對話框內顯示快進按鈕的 X 座標。
  * @default 500
  * @type number
  *
- * @param SkipPictureY
- * @text 快進播放按鈕圖片位置 Y
- * @desc 窗口內表示快進按鈕的 Y 座標。
+ * @param スキップピクチャY
+ * @text 快進播放圖片位置 Y
+ * @desc 對話框內顯示快進按鈕的 Y 座標。
  * @default 0
  * @type number
  *
- * @param AutoPicture
- * @text 自動播放按鈕圖片
- * @desc 窗口內表示自動播放訊息圖片的檔案名稱。點擊時進入自動播放模式。
+ * @param オートピクチャ
+ * @text 自動播放圖片
+ * @desc 對話框內表示自動播放訊息圖片的檔案名稱。
+ * 點擊時進入自動播放模式。
  * @default
  * @require 1
  * @dir img/pictures/
  * @type file
  *
- * @param AutoPictureX
- * @text 自動播放按鈕圖片位置 X
- * @desc 窗口內表示自動播放按鈕的 X 座標。
+ * @param オートピクチャX
+ * @text 自動播放圖片位置 X
+ * @desc 對話框內表示自動播放按鈕的 X 座標。
  * @default 750
  * @type number
  *
- * @param AutoPictureY
- * @text 自動播放按鈕圖片位置 Y
- * @desc 窗口內表示自動播放按鈕的 Y 座標。
+ * @param オートピクチャY
+ * @text 自動播放圖片位置 Y
+ * @desc 對話框內表示自動播放按鈕的 Y 座標。
  * @default 0
  * @type number
  *
- * @param InvalidSwitchId
+ * @param 無効化スイッチ
  * @text 插件功能開關
- * @desc 當指定開關ID為ON時，此插件的全功能將會無效。
+ * @desc 當指定開關 ID 為 ON 時，此插件的全功能將會無效。
  * @default 0
  * @type switch
  *
- * @help 在訊息窗口中切換訊息快進跟自動播放模式。
+ * @help 在訊息對話框中切換訊息快進跟自動播放模式。
  * 在事件結束時解除快進跟自動播放模式。
  * 並行執行事件的話，僅在未執行通常事件時才會解除。
  * 要直接解除模式的情況，請使用以下的腳本命令。
  *
  * $gameMessage.clearSkipInfo();
  *
- * ・SkipAlreadyReadMessage.js並用
+ * ・SkipAlreadyReadMessage.js 併用
  * 當此插件與 SkipAlreadyReadMessage.js（作者：奏ねこま）
  * 並用時，此插件的快進功能會變成「已讀快進」的功能。
  * http://makonet.sakura.ne.jp/rpg_tkool/
  *
  * ・參數「AutoWaitFrame」的設定在自動播放模式時可以變更對話停留時間。
- * 除了使用控制字元\v[n]之外，也可以使用js計算式。
- * 此外，textSize可以將顯示文字的數量合併到計算公式中。
+ * 除了使用控制字元 \v[n] 之外，也可以使用 js 計算式。
+ * 此外，textSize 可以將顯示文字的數量合併到計算公式中。
  *
  * 範例計算式：
  * 100 + textSize * 10
  *
  * 這個插件沒有插件命令。
- *
  *
  * 利用規約：
  *  不需要作者許可，可以進行修改和二次發布。
@@ -296,6 +316,8 @@ function Sprite_Frame() {
     var paramSkipSwitchId    = getParamNumber(['SkipSwitchId', 'スキップスイッチ'], 0);
     var paramAutoSwitchIId   = getParamNumber(['AutoSwitchIId', 'オートスイッチ'], 0);
     var paramInvalidSwitchId = getParamNumber(['InvalidSwitchId', '無効化スイッチ'], 0);
+    var paramIconX           = getParamNumber(['IconX', 'アイコンX'], 0);
+    var paramIconY           = getParamNumber(['IconY', 'アイコンY'], 0);
 
     //=============================================================================
     // Game_Message
@@ -384,8 +406,8 @@ function Sprite_Frame() {
 
     Window_Message.prototype.createSpriteFrame = function() {
         this._icon   = new Sprite_Frame(ImageManager.loadSystem('IconSet'), -1);
-        this._icon.x = this.width - this._icon.width;
-        this._icon.y = this.height - this._icon.height;
+        this._icon.x = (paramIconX ? paramIconX - this.x : this.width - this._icon.width);
+        this._icon.y = (paramIconY ? paramIconY - this.y : this.height - this._icon.height);
         this.addChild(this._icon);
     };
 
