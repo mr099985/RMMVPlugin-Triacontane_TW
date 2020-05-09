@@ -2,11 +2,14 @@
 // PictureCallCommon.js
 // ----------------------------------------------------------------------------
 // (C)2015 Triacontane
-// Translator : ReIris
 // This plugin is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
 // ----------------------------------------------------------------------------
 // Version
+// 1.13.1 2020/05/06 マップズームを実行したときの座標の取得計算が間違っていた問題を修正
+// 1.13.0 2019/12/22 ピクチャコモンを並列処理として実行する設定を追加。
+// 1.12.2 2019/03/31 キーバインドで追加でキーを指定した場合に、ボタン名称が小文字でないと反応しない仕様を変更
+// 1.12.1 2019/03/19 コミュニティ版コアスクリプト1.3以降でピクチャコモンから移動ルートの設定を実行するとエラーになっていた問題を修正
 // 1.12.0 2018/11/02 すべてのピクチャタッチを無効にできるスイッチを追加
 // 1.11.0 2018/08/10 なでなで機能に透過設定が正しく適用されない問題を修正
 //                   なでなで機能にもプラグインコマンドから透過設定を変更できる機能を追加
@@ -55,8 +58,9 @@
 // [Twitter]: https://twitter.com/triacontane/
 // [GitHub] : https://github.com/triacontane/
 //=============================================================================
+
 /*:
- * @plugindesc 圖片按鈕化插件
+ * @plugindesc [ ver1.13.1 ]圖片按鈕化
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
  * @param 透明色を考慮
@@ -73,26 +77,32 @@
  *
  * @param ポインタX座標の変数番号
  * @text 儲存按鈕 X 座標變數ID
- * @desc 始終儲存滑鼠光標或觸碰位置的 X 坐標的變數 ID。
+ * @desc 始終儲存滑鼠光標或點擊位置的 X 坐標的變數 ID。
  * @default 0
  * @type variable
  *
  * @param ポインタY座標の変数番号
  * @text 儲存按鈕 Y 座標變數ID
- * @desc 始終儲存滑鼠光標或觸碰位置的 Y 坐標的變數 ID。
+ * @desc 始終儲存滑鼠光標或點擊位置的 Y 坐標的變數 ID。
  * @default 0
  * @type variable
  *
  * @param タッチ操作抑制
- * @text 觸碰操作抑制
- * @desc 當滿足觸發條件時，清除觸摸情報。(ON/OFF)
- * 與其他觸摸操作重疊時打開。
+ * @text 點擊操作抑制
+ * @desc 當滿足觸發條件時，清除點擊情報。(ON/OFF)
+ * 與其他點擊操作重疊時打開。
  * @default false
  * @type boolean
  *
  * @param 戦闘中常にコモン実行
  * @text 戰鬥中常時執行
  * @desc 無論何時在戰鬥中點擊按鈕，都會執行一個一般劇情。(ON/OFF)
+ * @default false
+ * @type boolean
+ *
+ * @param 並列処理として実行
+ * @text 並行處理
+ * @desc 通過點擊圖片來執行一般劇情是以「並行處理」執行的。
  * @default false
  * @type boolean
  *
@@ -110,7 +120,7 @@
  * 但某些事件命令可能無法正常運行。
  *
  * 注意！
- * 一旦圖片與一般劇情相關聯，即使圖片被刪除也是有效的。
+ * 一旦該圖片與一般劇情相關聯，即使圖片被刪除也是有效的。
  * 如果沒有圖片，無論你在哪裡點擊它都不會反應。
  * 但如果你再次用相同的編號 ID 顯示圖片，它會做出反應。
  *
@@ -134,14 +144,14 @@
  *      11 : 游標在圖片內移動
  *      12 : 游標點擊後在在圖片內移動
  *
- *      如果指定了透明色觸發參數(ON / OFF)，則可以設置是否觸發每張圖片的透明色。
- *      如果未設置任何內容，則應用插件參數設置。(默認規格)
+ *      如果指定了透明色觸發參數(ON / OFF)，則可以設定是否點擊每張圖片的透明色。
+ *      如果未設定任何內容，則應用插件參數設置。(默認規格)
  *
  *  例如：P_CALL_CE 1 3 7 ON
  *
  *  P_CALL_SWITCH [圖片ID] [開關ID] [觸發方法] [透明色觸發]
- *  　　當在圖片區域內滿足觸發條件時，打開任何開關。
- *  　　觸發設置等與圖片按鈕相同。
+ *  　　當在圖片區域內滿足觸發條件時，打開指定開關。
+ *  　　觸發設定等與圖片按鈕相同。
  *
  *  P_CALL_KEY_BIND [圖片ID] [按鈕名稱] [觸發方法] [透明色觸發]
  *  　　當在圖片區域內滿足觸發條件時，表示已按下任何按鈕。
@@ -162,35 +172,35 @@
  *  例如：P_CALL_CE_REMOVE 1
  *
  *  P_STROKE [圖片ID] [變數ID] [透明色觸發]
- *  　　當您移動鼠標或觸碰指定圖片時，與速度對應的值將添加到指定的變數中。
- *  　　即使更換或暫時隱藏圖片，此設置也有效。
+ *  　　當您移動滑鼠或點擊指定圖片時，與速度對應的值將添加到指定的變數中。
+ *  　　即使更換或暫時隱藏圖片，此設定也有效。
  *  　　在 10 秒內累積高達 1000 左右。
  *
  *  例如：P_STROKE 1 2 ON
  *
  *  P_STROKE_REMOVE [圖片ID]
- *  　　取消指定圖片的設置。
+ *  　　取消指定圖片的設定。
  *
  *  例如：P_STROKE_REMOVE 1
  *
  *  P_POINTER [圖片ID]
- *  　　指定的圖片將自動跟隨觸摸坐標。
- *  　　如果未觸碰，它將自動隱藏。
+ *  　　指定的圖片將自動跟隨點擊坐標。
+ *  　　如果未點擊，它將自動隱藏。
  *
  *  例如：P_POINTER 1
  *
  *  P_POINTER_REMOVE [圖片ID]
- *  　　從指定的圖片中刪除。
+ *  　　對指定圖片移除點擊跟隨。
  *
  *  例如：P_POINTER_REMOVE 1
  *
  *  ・腳本（進階使用）
  *  $gameScreen.isPointerInnerPicture([ID]);
  *
- *  如果具有指定[ID]的圖片中存在滑鼠或觸碰坐標，則返回true。
+ *  如果具有指定[ID]的圖片中存在滑鼠或點擊坐標，則返回 true。
  *  即使未使用[P_CALL_CE]，此腳本也有效。
  *
- *  例：$gameScreen.isPointerInnerPicture(5);
+ *  例如：$gameScreen.isPointerInnerPicture(5);
  *
  * 利用規約：
  *  不需要作者許可，可以進行修改和二次發布。
@@ -257,6 +267,7 @@
     var paramSuppressTouch            = getParamBoolean(['SuppressTouch', 'タッチ操作抑制']);
     var paramAlwaysCommonInBattle     = getParamBoolean(['AlwaysCommonInBattle', '戦闘中常にコモン実行']);
     var paramInvalidSwitchId          = getParamNumber(['InvalidSwitchId', '無効スイッチ'], 0);
+    var paramAsParallelCommon         = getParamBoolean(['AsParallelCommon', '並列処理として実行']);
 
     //=============================================================================
     // Game_Interpreter
@@ -286,7 +297,7 @@
             case 'P_CALL_KEY_BIND' :
             case 'ピクチャのキーバインド':
                 pictureId   = getArgNumber(args[0], 1, $gameScreen.maxPictures());
-                touchParam  = convertEscapeCharacters(args[1]).toLowerCase();
+                touchParam  = convertEscapeCharacters(args[1]);
                 trigger     = getArgNumber(args[2], 1);
                 transparent = (args.length > 3 ? getArgBoolean(args[3]) : null);
                 $gameScreen.setPictureCallCommon(pictureId, touchParam, trigger, transparent);
@@ -327,8 +338,11 @@
         this._setupFromPicture = false;
     };
 
-    Game_Interpreter.prototype.setupFromPicture = function(eventList) {
+    Game_Interpreter.prototype.setupFromPicture = function(eventList, commonId) {
         this.setup(eventList, null);
+        if (this.setEventInfo) {
+            this.setEventInfo({ eventType: 'common_event', commonEventId: commonId });
+        }
         this._setupFromPicture = true;
     };
 
@@ -368,7 +382,7 @@
             $gameSwitches.setValue(param * -1, true);
         }
         if (this.isTouchPictureCallCommon()) {
-            if ($gameMap.isEventRunning() && !$gameParty.inBattle()) {
+            if (!paramAsParallelCommon && $gameMap.isEventRunning() && !$gameParty.inBattle()) {
                 this._touchPictureParam = null;
                 return;
             }
@@ -415,16 +429,59 @@
         return result || this.setupPictureCommonEvent();
     };
 
+    var _Game_Map_updateInterpreter = Game_Map.prototype.updateInterpreter;
+    Game_Map.prototype.updateInterpreter = function() {
+        _Game_Map_updateInterpreter.apply(this, arguments);
+        this.setupPictureParallelCommonEvent();
+    };
+
+    Game_Map.prototype.setupPictureParallelCommonEvent = function() {
+        if (!paramAsParallelCommon) {
+            return;
+        }
+        var commonId = $gameTemp.pictureCommonId();
+        var event    = $dataCommonEvents[commonId];
+        if (event) {
+            if (!this._pictureCommonEvents) {
+                this._pictureCommonEvents = [];
+            }
+            var interpreter = new Game_Interpreter();
+            interpreter.setupFromPicture(event.list, commonId);
+            this._pictureCommonEvents.push(interpreter);
+            $gameTemp.clearPictureCallInfo();
+        }
+    };
+
     Game_Map.prototype.setupPictureCommonEvent = function() {
+        if (paramAsParallelCommon) {
+            return false;
+        }
         var commonId = $gameTemp.pictureCommonId();
         var event    = $dataCommonEvents[commonId];
         var result   = false;
-        if (commonId > 0 && !this.isEventRunning() && event) {
-            this._interpreter.setupFromPicture(event.list);
+        if (!this.isEventRunning() && event) {
+            this._interpreter.setupFromPicture(event.list, commonId);
             result = true;
         }
         $gameTemp.clearPictureCallInfo();
         return result;
+    };
+
+    var _Game_Map_updateEvents = Game_Map.prototype.updateEvents;
+    Game_Map.prototype.updateEvents = function() {
+        _Game_Map_updateEvents.apply(this, arguments);
+        if (this._pictureCommonEvents && this._pictureCommonEvents.length > 0) {
+            this.updatePictureCommonEvents();
+        }
+    };
+
+    Game_Map.prototype.updatePictureCommonEvents = function() {
+        this._pictureCommonEvents.forEach(function(event) {
+            event.update();
+        });
+        this._pictureCommonEvents = this._pictureCommonEvents.filter(function(event) {
+            return event.isRunning();
+        })
     };
 
     //=============================================================================
@@ -513,15 +570,13 @@
     };
 
     Game_Screen.prototype.disConvertPositionX = function(x) {
-        return Math.round((x + this.zoomX() - this.shake()) / this.zoomScale());
+        var unshiftX = x - this.zoomX() * (1 - this.zoomScale());
+        return Math.round(unshiftX / this.zoomScale());
     };
 
     Game_Screen.prototype.disConvertPositionY = function(y) {
-        return Math.round((y + this.zoomY()) / this.zoomScale());
-    };
-
-    Game_Screen.prototype.disConvertPositionY = function(y) {
-        return Math.round((y + this.zoomY()) / this.zoomScale());
+        var unshiftY = y - this.zoomY() * (1 - this.zoomScale());
+        return Math.round(unshiftY / this.zoomScale());
     };
 
     Game_Screen.prototype.isPointerInnerPicture = function(pictureId) {
