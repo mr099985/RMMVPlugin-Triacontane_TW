@@ -2,11 +2,15 @@
 // MessageWindowPopup.js
 // ----------------------------------------------------------------------------
 // (C) 2016 Triacontane
-// Translator : ReIris
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
 // ----------------------------------------------------------------------------
 // Version
+// 2.14.9 2019/12/27 StandPictureEC.jsおよびMessageAlignmentEC.jsと組み合わせた場合に発生する競合を修正
+// 2.14.8 2019/12/27 2.14.7の修正で一部制御文字を使用するとウィンドウ幅の計算が正しく行われない問題を修正
+// 2.14.7 2019/12/22 不明な制御文字が挿入されたとき、ウィンドウの横幅が拡張されないよう修正
+//                   StandPictureEC.jsでピクチャを表示したとき、初回のみポップアップウィンドウの座標が反映されない競合を修正
+// 2.14.6 2019/12/07 YEP_MessageCore.jsでネームボックスを表示する際、同プラグインの位置調整が反映されない競合を修正
 // 2.14.5 2019/07/21 YEP_MessageCore.jsでネームボックスを表示する際、特定の条件下で一瞬だけネームボックスが不正な位置に表示される問題を修正
 // 2.14.4 2019/06/23 フキダシウィンドウを無効化したときのX座標の値をデフォルトのコアスクリプトの動作に準拠するよう修正
 // 2.14.3 2019/06/18 MKR_MessageWindowCustom.jsとの連携で、フキダシウィンドウ有効時はフキダシの横幅と高さを優先するよう変更
@@ -95,135 +99,135 @@
 // [GitHub] : https://github.com/triacontane/
 //=============================================================================
 /*:
- * @plugindesc [ ver.2.14.5 ] 氣泡式對話框視窗
+ * @plugindesc [ ver2.14.9 ]氣泡式訊息視窗
  * @author トリアコンタン ( 翻譯 : ReIris )
  *
- * @param FontSize
- * @text 字體大小
- * @desc 氣泡式對話框視窗的預設文字大小
+ * @param フォントサイズ
+ * @text 文字大小
+ * @desc 氣泡式訊息視窗的預設文字大小
  * 通常視窗的文字大小：28
  * @default 22
  * @type number
  *
- * @param Padding
+ * @param 余白
  * @text 留白
- * @desc 氣泡式對話框視窗的留白大小
+ * @desc 氣泡式訊息視窗的留白大小
  * 通常視窗的留白：18
  * @default 10
  * @type number
  *
- * @param AutoPopup
- * @text 是否自動啟用氣泡式視窗
- * @desc 自動在事件中使用氣泡式視窗。（ON/OFF）
- * OFF 的情況為一般對話框視窗。
+ * @param 自動設定
+ * @text 是否自動啟用
+ * @desc 自動在事件中使用氣泡式訊息視窗。（ON/OFF）
+ * OFF 的情況為一般訊息視窗。
  * @default true
  * @type boolean
  *
- * @param FaceScale
+ * @param フェイス倍率
  * @text 頭像縮放比例
- * @desc 氣泡式視窗的頭像縮放大小(1-100%)
+ * @desc 氣泡式訊息視窗的頭像縮放大小(1-100%)
  * @default 75
  * @type number
  *
- * @param WindowLinkage
+ * @param ウィンドウ連携
  * @text 輸入視窗連動
- * @desc 將選擇視窗和數字輸入視窗跟氣泡式視窗連動。(ON/OFF)
+ * @desc 將選擇視窗和數字輸入視窗跟氣泡式訊息視窗。(ON/OFF)
  * @default true
  * @type boolean
  *
- * @param BetweenLines
+ * @param 行間
  * @text 行間距
  * @desc 設置行和行之間的間距（單位：px）。
  * @default 4
  * @type number
  *
- * @param ThroughWindow
+ * @param ウィンドウ透過
  * @text 重疊是否透明
  * @desc 視窗重疊時透明顯示。(ON/OFF)
- * 選擇項於氣泡式視窗內顯示的場合請設定為ON。
+ * 選擇項於氣泡式訊息視窗內顯示的場合請設定為ON。
  * @default false
  * @type boolean
  *
- * @param FontSizeRange
- * @text 字體大小範圍
- * @desc 氣泡式視窗的控制字元「\{」「\}」使用時增減字體大小的幅度。
+ * @param フォントサイズ増減幅
+ * @text 文字大小範圍
+ * @desc 氣泡式訊息視窗的控制字元「\{」「\}」使用時增減文字大小的幅度。
  * 預設為 12 。
  * @default 12
  * @type number
  *
- * @param FontUpperLimit
- * @text 字體大小上限
- * @desc 氣泡式視窗的控制字元「\{」「\}」使用時字體最大上限。
+ * @param フォントサイズ上限
+ * @text 文字大小上限
+ * @desc 氣泡式訊息視窗的控制字元「\{」「\}」使用時文字最大上限。
  * 預設為 96。
  * @default 96
  * @type number
  *
- * @param FontLowerLimit
- * @text 字體大小下限
- * @desc 氣泡式視窗的控制字元「\{」「\}」使用時字體最大下限。
+ * @param フォントサイズ下限
+ * @text 文字大小下限
+ * @desc 氣泡式訊息視窗的控制字元「\{」「\}」使用時文字最大下限。
  * 預設為 12。
  * @default 24
  * @type number
  *
- * @param InnerScreen
- * @text 是否自適應
- * @desc 調整位置，使氣泡式視窗在水平、垂直方向都自適應畫面。
+ * @param 画面内に収める
+ * @text 是否自動適應畫面
+ * @desc 調整位置，使氣泡式訊息視窗在水平、垂直方向都自動適應畫面。
  * @default false
  * @type boolean
  *
- * @param ShakeSpeed
+ * @param 振動の速さ
  * @text 震動速度
- * @desc 視窗震動時的速度。可以利用控制字元\v[n]控制。
+ * @desc 視窗震動時的速度。可以利用控制字元 \v[n] 控制。
  * @default 5
  * @type number
  *
- * @param ShakeDuration
+ * @param 振動時間
  * @text 震動時間
- * @desc 視窗震動的時間。可以利用控制字元\v[n]控制。
- * 指定 0 的情況始終保持振動。
+ * @desc 視窗震動的時間。可以利用控制字元 \v[n] 控制。
+ * 指定 0 的情況始終保持震動。
  * @default 60
  * @type number
  *
- * @param NoUseTail
+ * @param テールを使わない
  * @text 禁用暫停圖示顯示結尾
  * @desc 禁用暫停圖示的顯示訊息結尾功能。
  * 顯示在預設位置。
  * @default false
  * @type boolean
  *
- * @param MinWidthVariableId
+ * @param 最小横幅取得変数ID
  * @text 指定最小寬度變數 ID
- * @desc 指定的變數 ID ，控制氣泡式視窗的最小寬度（單位 : px）。
+ * @desc 指定的變數 ID ，控制視窗的最小寬度（單位 : px）。
  * @default 0
  * @type variable
  *
- * @param MinHeightVariableId
+ * @param 最小高さ取得変数ID
  * @text 指定最小高度變數 ID
- * @desc 指定的變數 ID，控制氣泡式視窗的最小高度（單位 : px）。
+ * @desc 指定的變數 ID，控制視窗的最小高度（單位 : px）。
  * @default 0
  * @type variable
  *
  * @param lowerLimitX
  * @text 下限 X 座標
- * @desc 氣泡式視窗的下限 X 座標。
+ * @desc 氣泡式訊息視窗的下限 X 座標。
  * @default 0
  * @type number
  *
  * @param upperLimitX
  * @text 上限 X 座標
- * @desc 氣泡式視窗的上限 X 座標。
+ * @desc 氣泡式訊息視窗的上限 X 座標。
  * @default 0
  * @type number
  *
  * @param lowerLimitY
  * @text 下限 Y 座標
- * @desc 氣泡式視窗的下限 Y 座標。
+ * @desc 氣泡式訊息視窗的下限 Y 座標。
  * @default 0
  * @type number
  *
  * @param upperLimitY
  * @text 上限 Y 座標
- * @desc 氣泡式視窗的上限 Y 座標。
+ * @desc 氣泡式訊息視窗的上限 Y 座標。
  * @default 0
  * @type number
  *
@@ -243,7 +247,7 @@
  * @min -2000
  * @max 2000
  *
- * @help 訊息視窗變更為氣泡式視窗，並顯示於指定角色上方。
+ * @help 訊息視窗變更為氣泡式訊息視窗，並顯示於指定角色上方。
  *
  * 與 YEP_MessageCore.js 併用的情況，
  * 此插件配置 YEP_MessageCore.js 在下方。
@@ -251,10 +255,11 @@
  * 另外，併用 FTKR_ExMessageWindow2.js 的複數視窗表示，
  * 此插件配置 FTKR_ExMessageWindow2.js 在下方。
  *
- * 插件參數[AutoPopup]
+ * 插件參數 [是否自動啟用]
  * 與 FTKR_ExMessageWindow2.js 併用的情況。
- * 用於自動設置的對話框視窗是視窗 ID 0。
- * 當它為 OFF 時，視窗 ID 0 返回到一般顯示方法。
+ * 用於自動啟用的訊息視窗是視窗 ID 0。
+ * 當它為 OFF 時，視窗 ID 0 將返回到一般顯示方法。
+ *
  *
  * 詳細插件命令
  *  從事件命令中使用「插件命令」執行。
@@ -273,36 +278,36 @@
  * 範例：MWP_VALID 0 1
  *
  * MWP_VALID [事件名] [視窗位置]
- * 　對話框視窗會顯示在與事件名一致的事件上方。
+ * 　訊息視窗會顯示在與事件名一致的事件上方。
  *
  * 範例：MWP_VALID test_event 1
  *
  * ！複數訊息視窗顯示使用的情況！
- * MWP_VALID [角色ID] [視窗ID] [視窗位置]
+ *   MWP_VALID [角色 ID ] [視窗 ID ] [視窗位置]
  * 　指定的訊息視窗 ID 將顯示於指定角色 ID 的上方
- * 　玩家 : -1 本事件 : 0 指定事件 ID : 1 ～
+ * 　玩家 : -1 / 本事件 : 0 / 指定事件 ID : 1 ～
  * 　跟隨隊友 : -2, -3, -4
- * 　未指定視窗ID的情況，將使用視窗 ID 0。
+ * 　未指定視窗 ID 的情況，將使用視窗 ID 0。
  *
  * 範例：MWP_VALID 0 1
  *
  * MWP_INVALID
- * 　氣泡式視窗恢復預設對話框視窗
+ * 　氣泡式訊息視窗恢復預設訊息視窗
  *
  * 範例：MWP_INVALID
  *
  * ！複數訊息視窗顯示使用的情況！
- * MWP_INVALID [視窗 ID ]
- * 　指定的氣泡式視窗 ID 將返回預設對話框視窗。
- * 　未指定氣泡式視窗的 ID，會將全部的氣泡式視窗恢復預設對話框視窗。
+ *   MWP_INVALID [視窗 ID ]
+ * 　指定的氣泡式訊息視窗 ID 將返回預設訊息視窗。
+ * 　未指定氣泡式訊息視窗的 ID，會將全部的氣泡式訊息視窗恢復預設訊息視窗。
  *
  * 範例：MWP_INVALID 1
  *
  * MWP_FREE 100 200
- * 在任意指定位置顯示氣泡式視窗。
+ * 在任意指定位置顯示氣泡式訊息視窗。
  *
  * MWP_SETTING [設定内容]
- * 　設定氣泡式視窗。在設定內容中輸入以下內容。
+ * 　設定氣泡式訊息視窗。在設定內容中輸入以下內容。
  *
  *   POS_UPPER
  * 　　視窗位置固定在角色上方。
@@ -325,29 +330,29 @@
  *   POS_AUTO
  * 　　通常顯示在角色上方，只有在切到視窗時才顯示在下方。
  *
- *   SKIN[放置在 /img/system/ 內的 Window 檔案名]
- *     氣泡式視窗時專用的視窗樣式。
+ *   SKIN [放置在 /img/system/ 內的 Window 檔案名]
+ *     氣泡式訊息視窗時專用的視窗樣式。
  *
  *   SUB_POS_PLAYER
  *     將選擇項以及數值輸入的視窗顯示在玩家的頭頂上。因為位置關係，
  *     有時會出現視窗重疊，因此根據需要，請使用「重疊是否透明」參數。
  *
  *   SUB_POS_INNER
- *     在氣泡式視窗中包含選項和數字輸入視窗。
- *     使用此設置時，請務必使用「重疊是否透明」。
+ *     在氣泡式訊息視窗中包含選項和數字輸入視窗。
+ *     使用此設定時，請務必使用「重疊是否透明」。
  *
  *   SUB_POS_NORMAL
- *   　在氣泡式視窗下顯示選項和數字輸入視窗。
- *     在不更改設訂時進行此設定。
+ *   　在氣泡式訊息視窗下顯示選項和數字輸入視窗。
+ *     在不變更設定時進行此設定。
  *
  *   SUB_POS_RIGHT
- *   　在氣泡式視窗右側顯示選項和數字輸入視窗。
+ *   　在氣泡式訊息視窗右側顯示選項和數字輸入視窗。
  *
  * 範例：MWP_SETTING POS_UPPER
  * 　　  MWP_SETTING SKIN window2
  *
  * MWP_ADJUST [設定内容]
- * 　顯示氣泡式視窗的校正，請在設定內容中輸入以下內容。
+ * 　顯示氣泡式\訊息視窗的校正，請在設定內容中輸入以下內容。
  *
  * 　POS [X座標] [Y座標]
  * 　　校正視窗的 X 座標與 Y 座標。指定的話會由原座標進行相對校正。
@@ -356,13 +361,14 @@
  * 　　校正視窗的寬與高。指定的話會由原視窗大小進行相對校正。
  *
  * 範例：MWP_ADJUST POS 5 -3
+ * 　　  MWP_ADJUST SIZE 20 -40
  *
  * ！複數對話框視窗顯示使用的情況！
- *   氣泡式視窗的設定（校正），顯示位置和調整大小的結果對於
+ *   氣泡式訊息視窗的設定（校正），顯示位置和調整大小的結果對於
  *   所有 ID 的視窗是相同的。
  *
  * ・可以使用的控制字元
- * \sh[5] # 指定強度[5]的視窗震動
+ *   \sh[5] # 指定強度[5]的視窗震動
  *
  * 利用規約：
  *  不需要作者許可，可以進行修改和二次發布。
@@ -1118,6 +1124,13 @@
         if (isExistPlugin('MPP_MessageEX')) {
             this.width = this.windowWidth();
         }
+        // Resolve conflict for StandPictureEC
+        if (typeof Imported !== 'undefined' && Imported['StandPictureEC']) {
+            this._textState = {};
+            this._textState.index = 0;
+            this._textState.text = '';
+            this.resetLayout();
+        }
         _Window_Message_startMessage.apply(this, arguments);
         this.resetLayout();
     };
@@ -1163,9 +1176,15 @@
     var _Window_Message_update      = Window_Message.prototype.update;
     Window_Message.prototype.update = function() {
         _Window_Message_update.apply(this, arguments);
+        this.updatePlacementPopupIfNeed();
+    };
+
+    Window_Message.prototype.updatePlacementPopupIfNeed = function() {
         var prevX = this.x;
         var prevY = this.y;
-        if (this.openness > 0 && this.isPopup()) this.updatePlacementPopup();
+        if (this.openness > 0 && this.isPopup()) {
+            this.updatePlacementPopup();
+        }
         if ((prevX !== this.x || prevY !== this.y) && this.isClosing()) {
             this.openness = 0;
         }
@@ -1255,6 +1274,10 @@
         var virtual      = {};
         virtual.index    = 0;
         virtual.text     = this.convertEscapeCharacters($gameMessage.allText());
+        var defaultEscapeList = ['C', 'I', '{', '}'];
+        virtual.text     = virtual.text.replace(/\x1b(\w+)\[.*]/gi, function(text) {
+            return defaultEscapeList.contains(arguments[1].toUpperCase()) ? text : '';
+        });
         virtual.maxWidth = 0;
         this.newPage(virtual);
         while (!this.isEndOfText(virtual)) {
@@ -1546,8 +1569,8 @@
         };
 
         Window_NameBox.prototype.updatePlacementPopup = function() {
-            this.x = this._parentWindow.x;
-            this.y = this._parentWindow.y - this.height;
+            this.adjustPositionX();
+            this.adjustPositionY();
             if (!$gameSystem.getMessagePopupId()) {
                 this.openness = 0;
             }
